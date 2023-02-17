@@ -9,27 +9,29 @@ public partial class OrderHeader
 
     public int UserId { get; set; }
 
-    public int? BillToAddressId { get; set; }
+    public int BillToAddressId { get; set; }
 
-    public int? ShipToAddressId { get; set; }
+    public int ShipToAddressId { get; set; }
 
-    public int? CarrierId { get; set; }
+    public int CarrierId { get; set; }
 
-    public string? ShipToName { get; set; }
+    public string ShipToName { get; set; } = null!;
 
-    public string? ShipToAddress1 { get; set; }
+    public string ShipToAddress1 { get; set; } = null!;
 
     public string? ShipToAddress2 { get; set; }
 
-    public string? ShipToCity { get; set; }
+    public string ShipToCity { get; set; } = null!;
 
-    public string? ShipToState { get; set; }
+    public int? ShipToStateId { get; set; }
 
-    public string? ShipToCountryId { get; set; }
+    public string ShipToCountryId { get; set; } = null!;
 
     public string? ShipToZipcode { get; set; }
 
-    public string? UseDropShip { get; set; }
+    public int UseDropShip { get; set; }
+
+    public int IsPreorder { get; set; }
 
     public string? Note { get; set; }
 
@@ -39,15 +41,13 @@ public partial class OrderHeader
 
     public DateTime? RequestedShipDate { get; set; }
 
-    public string? OrderStatus { get; set; }
+    public int OrderStatus { get; set; }
 
     public DateTime? CreatedDate { get; set; }
 
-    public bool? FinishedFlag { get; set; }
+    public bool FinishedFlag { get; set; }
 
     public int ErpCustomerId { get; set; }
 
-    public string? ErpCustomerPo { get; set; }
-
-    public virtual ICollection<OrderHeaderLine> OrderHeaderLines { get; } = new List<OrderHeaderLine>();
+    public string ErpCustomerPo { get; set; } = null!;
 }

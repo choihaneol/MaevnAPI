@@ -25,6 +25,10 @@ public partial class B2bapiContext : DbContext
 
     public virtual DbSet<CountryState> CountryStates { get; set; }
 
+    public virtual DbSet<InvoiceHeader> InvoiceHeaders { get; set; }
+
+    public virtual DbSet<InvoiceLine> InvoiceLines { get; set; }
+
     public virtual DbSet<Locator> Locators { get; set; }
 
     public virtual DbSet<OrderHeader> OrderHeaders { get; set; }
@@ -147,6 +151,215 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.Rno).HasColumnName("rno");
         });
 
+        modelBuilder.Entity<InvoiceHeader>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AccountNum)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("accountNum");
+            entity.Property(e => e.AdjustCost)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money")
+                .HasColumnName("adjustCost");
+            entity.Property(e => e.BalanceDue)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money")
+                .HasColumnName("balanceDue");
+            entity.Property(e => e.BillToAddress).HasColumnName("billToAddress");
+            entity.Property(e => e.BillToCity)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("billToCity");
+            entity.Property(e => e.BillToCountry)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("billToCountry");
+            entity.Property(e => e.BillToCountryAbb)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("billToCountryAbb");
+            entity.Property(e => e.BillToName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("billToName");
+            entity.Property(e => e.BillToState)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("billToState");
+            entity.Property(e => e.BillToStateAbb)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("billToStateAbb");
+            entity.Property(e => e.BillToZip)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("billToZip");
+            entity.Property(e => e.BillTransportationTo)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("billTransportationTo");
+            entity.Property(e => e.CreditAmount)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money")
+                .HasColumnName("creditAmount");
+            entity.Property(e => e.CustomerName)
+                .HasMaxLength(255)
+                .IsUnicode(false)
+                .HasColumnName("customerName");
+            entity.Property(e => e.CustomerPo)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("customerPO");
+            entity.Property(e => e.DropShipCost)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money")
+                .HasColumnName("dropShipCost");
+            entity.Property(e => e.DueDate)
+                .HasColumnType("date")
+                .HasColumnName("dueDate");
+            entity.Property(e => e.InvoiceDate)
+                .HasColumnType("date")
+                .HasColumnName("invoiceDate");
+            entity.Property(e => e.IssuedBy)
+                .HasMaxLength(80)
+                .IsUnicode(false);
+            entity.Property(e => e.IssuedDate)
+                .HasColumnType("date")
+                .HasColumnName("issuedDate");
+            entity.Property(e => e.LoginId).HasColumnName("loginId");
+            entity.Property(e => e.Note).HasColumnName("note");
+            entity.Property(e => e.Num)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("num");
+            entity.Property(e => e.PaymentTerms)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("paymentTerms");
+            entity.Property(e => e.PickedBy)
+                .HasMaxLength(80)
+                .IsUnicode(false);
+            entity.Property(e => e.SalesPerson)
+                .HasMaxLength(80)
+                .IsUnicode(false)
+                .HasColumnName("salesPerson");
+            entity.Property(e => e.ScannedBy)
+                .HasMaxLength(80)
+                .IsUnicode(false);
+            entity.Property(e => e.ShipDate)
+                .HasColumnType("date")
+                .HasColumnName("shipDate");
+            entity.Property(e => e.ShipHandlingCost)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money")
+                .HasColumnName("shipHandlingCost");
+            entity.Property(e => e.ShipNum)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("shipNum");
+            entity.Property(e => e.ShipToAddress).HasColumnName("shipToAddress");
+            entity.Property(e => e.ShipToCity)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("shipToCity");
+            entity.Property(e => e.ShipToCountry)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("shipToCountry");
+            entity.Property(e => e.ShipToCountryAbb)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("shipToCountryAbb");
+            entity.Property(e => e.ShipToName)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("shipToName");
+            entity.Property(e => e.ShipToState)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("shipToState");
+            entity.Property(e => e.ShipToStateAbb)
+                .HasMaxLength(10)
+                .IsUnicode(false)
+                .HasColumnName("shipToStateAbb");
+            entity.Property(e => e.ShipToZip)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("shipToZip");
+            entity.Property(e => e.ShipVia)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("shipVia");
+            entity.Property(e => e.Sonum)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("sonum");
+            entity.Property(e => e.StatusId)
+                .HasDefaultValueSql("((0))")
+                .HasColumnName("statusId");
+            entity.Property(e => e.SubTotalPrice)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money")
+                .HasColumnName("subTotalPrice");
+            entity.Property(e => e.TotalAmount)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money")
+                .HasColumnName("totalAmount");
+            entity.Property(e => e.TrackingNumber)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("trackingNumber");
+            entity.Property(e => e.WireTransCost)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money")
+                .HasColumnName("wireTransCost");
+        });
+
+        modelBuilder.Entity<InvoiceLine>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.BoQty).HasColumnName("boQty");
+            entity.Property(e => e.CustomerPo)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("customerPO");
+            entity.Property(e => e.DcAmount)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("money")
+                .HasColumnName("dcAmount");
+            entity.Property(e => e.DcRate)
+                .HasDefaultValueSql("((0))")
+                .HasColumnType("numeric(18, 2)")
+                .HasColumnName("dcRate");
+            entity.Property(e => e.FinalAmount)
+                .HasColumnType("money")
+                .HasColumnName("finalAmount");
+            entity.Property(e => e.LoginId).HasColumnName("loginId");
+            entity.Property(e => e.Memo)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("memo");
+            entity.Property(e => e.Num)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasDefaultValueSql("('')")
+                .HasColumnName("num");
+            entity.Property(e => e.PoQty).HasColumnName("poQty");
+            entity.Property(e => e.ShipQty).HasColumnName("shipQty");
+            entity.Property(e => e.ShortDescription)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("shortDescription");
+            entity.Property(e => e.Sku)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("SKU");
+            entity.Property(e => e.UnitPrice)
+                .HasColumnType("money")
+                .HasColumnName("unitPrice");
+        });
+
         modelBuilder.Entity<Locator>(entity =>
         {
             entity.HasKey(e => e.LocatorId).HasName("PK__Locator__8E1EB90FC9D73796");
@@ -167,45 +380,46 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<OrderHeader>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__OrderHea__C3905BCFC8DB4DAE");
+            entity.HasKey(e => e.OrderId).HasName("PK__OrderHea__C3905BCF03A5198B");
 
             entity.ToTable("OrderHeader");
 
             entity.Property(e => e.OrderId).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasColumnType("date");
-            entity.Property(e => e.Email).IsUnicode(false);
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .IsUnicode(false);
             entity.Property(e => e.ErpCustomerId).HasColumnName("erpCustomerId");
             entity.Property(e => e.ErpCustomerPo)
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("erpCustomerPO");
             entity.Property(e => e.Note).IsUnicode(false);
-            entity.Property(e => e.OrderStatus)
-                .HasMaxLength(10)
-                .IsUnicode(false);
             entity.Property(e => e.Phone)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.RequestedShipDate).HasColumnType("date");
             entity.Property(e => e.ShipToAddress1).IsUnicode(false);
-            entity.Property(e => e.ShipToAddress2).IsUnicode(false);
-            entity.Property(e => e.ShipToCity).IsUnicode(false);
+            entity.Property(e => e.ShipToAddress2)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.ShipToCity)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.ShipToCountryId)
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.ShipToName)
-                .HasMaxLength(100)
+                .HasMaxLength(255)
                 .IsUnicode(false);
-            entity.Property(e => e.ShipToState).IsUnicode(false);
-            entity.Property(e => e.ShipToZipcode).IsUnicode(false);
-            entity.Property(e => e.UseDropShip)
-                .HasMaxLength(1)
+            entity.Property(e => e.ShipToZipcode)
+                .HasMaxLength(20)
                 .IsUnicode(false);
         });
 
         modelBuilder.Entity<OrderHeaderLine>(entity =>
         {
-            entity.HasKey(e => e.OrderLineId).HasName("PK__OrderHea__29068A105AAD4F70");
+            entity.HasKey(e => e.OrderLineId).HasName("PK__OrderHea__29068A1004C91ED6");
 
             entity.ToTable("OrderHeaderLine");
 
@@ -222,11 +436,6 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.TotalPrice).HasColumnType("money");
             entity.Property(e => e.TotalScannedPrice).HasColumnType("money");
             entity.Property(e => e.WholeSalePrice).HasColumnType("money");
-
-            entity.HasOne(d => d.Order).WithMany(p => p.OrderHeaderLines)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__OrderHead__Order__2645B050");
         });
 
         modelBuilder.Entity<Payment>(entity =>
@@ -310,7 +519,7 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<ProductCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83FD7CEFD5C");
+            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83F90A3071C");
 
             entity.ToTable("ProductCategory");
 
@@ -336,7 +545,7 @@ public partial class B2bapiContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.ItemWeight)
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.LongDescription)
                 .HasMaxLength(1000)

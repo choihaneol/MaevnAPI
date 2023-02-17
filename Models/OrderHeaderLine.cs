@@ -11,25 +11,23 @@ public partial class OrderHeaderLine
 
     public int UserId { get; set; }
 
-    public int? ProductId { get; set; }
+    public int ProductId { get; set; }
 
-    public int? ProgramId { get; set; }
+    public int ProgramId { get; set; }
 
-    public decimal? WholeSalePrice { get; set; }
+    public decimal WholeSalePrice { get; set; }
 
-    public string? StyleNumber { get; set; }
+    public string StyleNumber { get; set; } = null!;
 
-    public int? Quantity { get; set; }
+    public string ColorName { get; set; } = null!;
 
-    public int? Scannedquantity { get; set; }
+    public string Size { get; set; } = null!;
 
-    public decimal? TotalScannedPrice { get; set; }
+    public int Quantity { get; set; }
 
-    public decimal? TotalPrice { get; set; }
+    public int Scannedquantity { get; set; }
 
-    public string? ColorName { get; set; }
+    public decimal TotalScannedPrice { get; set; }
 
-    public string? Size { get; set; }
-
-    public virtual OrderHeader Order { get; set; } = null!;
+    public decimal TotalPrice { get; set; }
 }

@@ -15,6 +15,7 @@ using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using static Azure.Core.HttpHeader;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace API.Services
@@ -29,8 +30,8 @@ namespace API.Services
             List<ProductCategoryModel> categoryObject = new List<ProductCategoryModel>();
             for (int i = 0; i < categoryProducts.Count(); i++)
             {
-        
-                    if (categoryProducts[i].B2bActiveFlag == true)  // it need to be changed to true 
+
+                if (categoryProducts[i].B2bActiveFlag == true)  // it need to be changed to true 
                 {
                     var propertyValue = categoryProducts[i].StyleNumber;
                     var propertyValue2 = 10;
@@ -40,6 +41,14 @@ namespace API.Services
                     var url = _db.ProductImages
                         .FromSqlRaw($"Select * from ProductImage where StyleNumber = '{propertyValue}' AND TypeId = '{propertyValue2}'").ToList();
 
+                    var colortmp = categoryProducts[i].Colors;
+                    List<string> color = colortmp.Split(',').ToList();
+                    var fittmp = categoryProducts[i].Fits;
+                    List<string> fit = fittmp.Split(',').ToList();
+                    var sizetmp = categoryProducts[i].Sizes;
+                    List<string> size = sizetmp.Split(',').ToList();
+                    var inseamtmp = categoryProducts[i].InseamLengths;
+                    List<string> inseam = inseamtmp.Split(',').ToList();
 
                     categoryObject.Add(new ProductCategoryModel
                     {
@@ -50,11 +59,19 @@ namespace API.Services
                         ProductLine = categoryProducts[i].ProductLine,
                         Colors = categoryProducts[i].Colors,
                         Fits = categoryProducts[i].Fits,
-                        Sizes = categoryProducts[i].Sizes, 
+                        Sizes = categoryProducts[i].Sizes,
+                        InseamLength = categoryProducts[i].InseamLengths,
+
+
+                        ColorList = color,
+                        FitList = fit,
+                        SizeList = size,
+                        InseamLengthList = inseam,
 
                         GarmentType = categoryProducts[i].GarmentType,
                         PriceMin = categoryProducts[i].PriceMin,
                         PriceMax = categoryProducts[i].PriceMax,
+                        PriceMean = (categoryProducts[i].PriceMin + categoryProducts[i].PriceMax / 2),
                         B2bActiveFlag = categoryProducts[i].B2bActiveFlag,
 
                         ProductUrl = url[0].ProductUrl,
@@ -64,79 +81,82 @@ namespace API.Services
             }
 
             Task<List<ProductCategoryModel>> final = Task.FromResult(categoryObject);
-            return await final;    
+            return await final;
         }
 
-        /*
-        public async Task<List<ProductCategoryModel>> filter(List<ProductCategoryModel> categoryObject,
-            string? color, string? fit, string? sizes, string? garmentType)
+
+
+        public async Task<List<ProductCategory>> filter(Models.B2bapiContext _db, int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
         {
-            List<ProductCategoryModel> test;
 
-            //logic 물어보기. 노다가로 하면 되긴하는데 코드가 너무 길어짐. 다른 방법 없는지  
-            if (garmentType != null)
+
+            int check = 0;
+            string query = "Select * from ProductCategory where ErpProgramId = " + programId;
+            if (!string.IsNullOrEmpty(garmentType))
             {
-                var filteredResults = from a in categoryObject
-                                      where a.GarmentType == garmentType
-                                      select a;
+                query += " and GarmentType ='" + garmentType + "'";
             }
-            if (color != null)
+          
+            if (!string.IsNullOrEmpty(color))
             {
-                var filteredResults = from a in categoryObject
-                                      where a.Colors.Contains(color.ToString())
-                                      select a;
-            }
+                List<string> colorlist = color.Split(',').ToList();
+                query += " and Colors like '%";
 
-
-            if ( garmentType == null && color == null && fit == null && sizes == null)
-
-            {
-                var filteredResults = categoryObject;
+                for (int i = 0; i < colorlist.Count; i++)
+                {
+                    query += colorlist[i] + "%";
+                }
+                query += "'";
             }
 
+            if (!string.IsNullOrEmpty(fit))
+            {
+                List<string> fitlist = fit.Split(',').ToList();
+                query += " and Fits like '%";
+
+                for (int i = 0; i < fitlist.Count; i++)
+                {
+                    query += fitlist[i] + "%";
+                }
+                query += "'";
+            }
+
+            if (!string.IsNullOrEmpty(size))
+            {
+                List<string> sizelist = size.Split(',').ToList();
+                query += " and Sizes like '%";
+
+                for (int i = 0; i < sizelist.Count; i++)
+                {
+                    query += sizelist[i] + "%";
+                }
+                query += "'";
+            }
+
+            if (!string.IsNullOrEmpty(inseam))
+            {
+                List<string> inseamlist = inseam.Split(',').ToList();
+                query += " and InseamLengths like '%";
+
+                for (int i = 0; i < inseamlist.Count; i++)
+                {
+                    query += inseamlist[i] + "%";
+                }
+                query += "'";
+            }
+
+            if (!string.IsNullOrEmpty(priceFrom.ToString()) && !string.IsNullOrEmpty(priceTo.ToString()))
+            {
+                query += " and (PriceMin+PriceMax)/2 > " + priceFrom + " and (PriceMin+PriceMax)/2 < " + priceTo;
+                check++;
+            }
+
+            var test = _db.ProductCategories.FromSqlRaw(query).ToList();
 
 
+            Task<List<ProductCategory>> final = Task.FromResult(test);
+            return await final;
 
-            /*
-                          if (garmentType != null)
-                           {
-                               var filteredResults = from a in categoryObject
-                                                     where a.GarmentType == garmentType
-                                                     select a;
-
-                               _response.Result = filteredResults;
-                           } 
-                           if (color != null)
-                           {
-                               var filteredResults = from a in categoryObject
-                                                     where a.Colors.Contains(color.ToString())
-                               select a;
-
-                               _response.Result = filteredResults;
-                           }
-                           if (fit != null)
-                           {
-                               var filteredResults = from a in categoryObject
-                                                     where a.Fits.Contains(fit.ToString())
-                                                     select a;
-
-                               _response.Result = filteredResults;
-                           }
-
-                           else  
-                           {
-                               _response.Result = categoryObject;
-
-                           }
-
-                           */
-
-
-
-            //Task<List<ProductCategoryModel>> final = Task.FromResult(filteredResults);
-            //return await final;
-       // }
-    
-
+        }
     }
 }
