@@ -7,11 +7,19 @@ using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.Extensions.Hosting;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
+using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
+using System.Reflection.Metadata.Ecma335;
+using System.Data.SqlTypes;
+using Microsoft.IdentityModel.Tokens;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace API.Controllers
 {
@@ -23,6 +31,7 @@ namespace API.Controllers
         private readonly B2bapiContext _db;
         protected APIResponse _response;
         private List<ProductCategoryModel> categoryObject;
+        private List<ProductCategory> categoryProducts;
         private readonly ProductService _productservice;
 
         public ProductAPIController(B2bapiContext db, ProductService ProductService)
@@ -50,7 +59,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> GetProductCategory(int programId, decimal price, string garmentTypes, string color, string fit, string size)
+        public async Task<ActionResult<APIResponse>> GetProductCategory(int programId, string? garmentType, string? color, string? fit, string? size, decimal? priceFrom, decimal? priceTo)
         {
             try
             {
@@ -60,17 +69,67 @@ namespace API.Controllers
                     return BadRequest(_response);
                 }
 
-                var categoryProducts = _db.ProductCategories.Where(a => a.ErpProgramId == programId).ToList();
+
+                //, string -> array or list
+  //              string s = "You win some. You lose some.";
+
+//                string[] subs = s.Split(' ');
+
+               // foreach (var sub in subs)
+               // {
+                //    Console.WriteLine($"Substring: {sub}");
+                //}
+
+
+
+                // string query = "Select * from ProductCategory where ErpProgramId = " + programId;
+                // var test = _db.ProductCategories.FromSqlRaw(query).ToList();
+                // categoryProducts = test;
+
+
+                
+                int check = 0;
+                string query = "Select * from ProductCategory where ErpProgramId = " + programId;
+                if (!string.IsNullOrEmpty(garmentType))
+                {
+                    query += " and GarmentType ='" + garmentType + "'";
+                }
+                if (!string.IsNullOrEmpty(color))
+                {
+                    query += " and Colors like '%" + color + "%'";
+                }
+                if (!string.IsNullOrEmpty(fit))
+                {
+                    query += " and Fits like '%" + fit + "%'";
+                }
+                if (!string.IsNullOrEmpty(size))
+                {
+                    query += " and Sizes like '%" + size + "%'";
+                }
+                if (!string.IsNullOrEmpty(priceFrom.ToString()) && !string.IsNullOrEmpty(priceTo.ToString()))
+                {
+                    query += " and (PriceMin+PriceMax)/2 > " + priceFrom + " and (PriceMin+PriceMax)/2 < " + priceTo;
+                    check++;
+                }
+                
+
+ 
+
+
+                var test = _db.ProductCategories.FromSqlRaw(query).ToList();
+                categoryProducts = test;
+
                
+
+
+
+                // var categoryProducts = _db.ProductCategories.Where(a => a.ErpProgramId == programId).ToList();
                 if (categoryProducts.Count == 0)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     return BadRequest(_response);
                 }
 
-
-                //var categoryProducts = _db.ProductCategories
-                //    .FromSqlRaw($"Select * from ProductCategory where ErpProgramId = '{programId.ToString()}'").ToList();
 
 
 
@@ -97,13 +156,11 @@ namespace API.Controllers
                 {
                     Console.WriteLine(element.t.Id + " " + element.t.ErpProgramId + " " + element.t.ProductLine + " " + element.t.StyleNumber + " " + element.t.Colors + " " + element.s.ProductCategoryId + " " + element.s.TypeId + " " + element.s.StyleNumber + " " + element.s.ProductUrl);
                 }
-
                 */
 
-
-
+ 
                 _response.Result = categoryObject;
-                    _response.StatusCode = HttpStatusCode.OK;
+                _response.StatusCode = HttpStatusCode.OK;
                     return Ok(_response);
             }
             catch (Exception ex)
@@ -118,3 +175,4 @@ namespace API.Controllers
     }
 }
 
+ 

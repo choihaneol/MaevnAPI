@@ -1,6 +1,7 @@
 global using API.Models;
 global using Microsoft.EntityFrameworkCore;
 global using API.Services;
+using System.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<B2bapiContext>();
 
-
+//Acept for accessing API 
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -26,6 +28,15 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 //}
+
+
+//Acept for accessing API 
+app.UseCors(opt =>
+{
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+});
+
+
 
 app.UseHttpsRedirection();
 
