@@ -89,6 +89,8 @@ namespace API.Services
         public async Task<List<ProductCategory>> filter(Models.B2bapiContext _db, int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
         {
 
+            // query need to be modifired to below
+            // where (erpProgramId =6 and [Sizes] like '%XXS%') or (erpProgramId =6 and [Sizes] like '%2XLP%')
 
             int check = 0;
             string query = "Select * from ProductCategory where ErpProgramId = " + programId;
