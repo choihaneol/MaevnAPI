@@ -1,6 +1,4 @@
-﻿
-
-using API.Models;
+﻿using API.Models;
 using API.Models.Dto;
 using API.Services;
 using Azure;
@@ -23,6 +21,7 @@ namespace API.Services
 
     public class ProductService
     {
+
 
         public async Task<List<ProductCategoryModel>> getCategoryProduct(Models.B2bapiContext _db, APIResponse _response, List<ProductCategory> categoryProducts, int programId)
         {
@@ -86,76 +85,233 @@ namespace API.Services
 
 
 
+
+
+
+
         public async Task<List<ProductCategory>> filter(Models.B2bapiContext _db, int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
         {
 
             // query need to be modifired to below
             // where (erpProgramId =6 and [Sizes] like '%XXS%') or (erpProgramId =6 and [Sizes] like '%2XLP%')
 
+            /*  int check = 0;
+              string query = "Select * from ProductCategory where ErpProgramId = " + programId;
+              if (!string.IsNullOrEmpty(garmentType))
+              {
+                  query += " and GarmentType ='" + garmentType + "'";
+              }
+
+              if (!string.IsNullOrEmpty(color))
+              {
+                  List<string> colorlist = color.Split(',').ToList();
+                  query += " and Colors like '%";
+
+                  for (int i = 0; i < colorlist.Count; i++)
+                  {
+                      query += colorlist[i] + "%";
+                  }
+                  query += "'";
+              }
+
+              if (!string.IsNullOrEmpty(fit))
+              {
+                  List<string> fitlist = fit.Split(',').ToList();
+                  query += " and Fits like '%";
+
+                  for (int i = 0; i < fitlist.Count; i++)
+                  {
+                      query += fitlist[i] + "%";
+                  }
+                  query += "'";
+              }
+
+              if (!string.IsNullOrEmpty(size))
+              {
+                  List<string> sizelist = size.Split(',').ToList();
+                  query += " and Sizes like '%";
+
+                  for (int i = 0; i < sizelist.Count; i++)
+                  {
+                      query += sizelist[i] + "%";
+                  }
+                  query += "'";
+              }
+
+              if (!string.IsNullOrEmpty(inseam))
+              {
+                  List<string> inseamlist = inseam.Split(',').ToList();
+                  query += " and InseamLengths like '%";
+
+                  for (int i = 0; i < inseamlist.Count; i++)
+                  {
+                      query += inseamlist[i] + "%";
+                  }
+                  query += "'";
+              }
+
+              if (!string.IsNullOrEmpty(priceFrom.ToString()) && !string.IsNullOrEmpty(priceTo.ToString()))
+              {
+                  query += " and (PriceMin+PriceMax)/2 > " + priceFrom + " and (PriceMin+PriceMax)/2 < " + priceTo;
+                  check++;
+              }
+
+              */
+            
+
+
+
             int check = 0;
-            string query = "Select * from ProductCategory where ErpProgramId = " + programId;
+            string query = "Select * from ProductCategory where ";
+
+            if (string.IsNullOrEmpty(garmentType) && string.IsNullOrEmpty(color) 
+                && string.IsNullOrEmpty(fit) && string.IsNullOrEmpty(size) 
+                && string.IsNullOrEmpty(inseam) && string.IsNullOrEmpty(priceFrom.ToString()) 
+                && string.IsNullOrEmpty(priceTo.ToString()))
+            {
+                query += "erpProgramId = " + programId;
+            }
+
+            Console.WriteLine(query);
+
+
             if (!string.IsNullOrEmpty(garmentType))
             {
-                query += " and GarmentType ='" + garmentType + "'";
+                List<string> garmentTypelist = garmentType.Split(',').ToList();
+
+                if(garmentTypelist.Count > 0) { query += "("; }
+                for (int i = 0; i < garmentTypelist.Count; i++)
+                {
+                    query += "erpProgramId = " + programId + " and GarmentType like '%" + garmentTypelist[i] + "%'"; 
+
+                    if (i == garmentTypelist.Count -1)
+                    {
+
+                    }else
+                    {
+                        query += "or ";
+                    }
+                }
+                if (garmentTypelist.Count > 0) { query += ")"; }
+
+                if (!string.IsNullOrEmpty(color) || !string.IsNullOrEmpty(fit) || !string.IsNullOrEmpty(size) || !string.IsNullOrEmpty(inseam) || !string.IsNullOrEmpty(priceFrom.ToString()) )
+                {
+                    query += "and ";
+                }
             }
-          
+
+            Console.WriteLine(query);
+
             if (!string.IsNullOrEmpty(color))
             {
                 List<string> colorlist = color.Split(',').ToList();
-                query += " and Colors like '%";
 
+                if (colorlist.Count > 0) { query += "("; }
                 for (int i = 0; i < colorlist.Count; i++)
                 {
-                    query += colorlist[i] + "%";
+                    query += "erpProgramId = " + programId + " and Colors like '%" + colorlist[i] + "%'";
+                    if (i == colorlist.Count - 1)
+                    {
+
+                    }
+                    else
+                    {
+                        query += "or ";
+                    }
                 }
-                query += "'";
+                if (colorlist.Count > 0) { query += ")"; }
+
+                if (!string.IsNullOrEmpty(fit) || !string.IsNullOrEmpty(size) || !string.IsNullOrEmpty(inseam) || !string.IsNullOrEmpty(priceFrom.ToString()))
+                {
+                    query += "and ";
+                }
             }
+            Console.WriteLine(query);
+
 
             if (!string.IsNullOrEmpty(fit))
             {
                 List<string> fitlist = fit.Split(',').ToList();
-                query += " and Fits like '%";
 
+                if (fitlist.Count > 0) { query += "("; }
                 for (int i = 0; i < fitlist.Count; i++)
                 {
-                    query += fitlist[i] + "%";
+                    query += "erpProgramId = " + programId + " and Fits like '%" + fitlist[i] + "%'";
+                    if (i == fitlist.Count - 1)
+                    {
+
+                    }
+                    else
+                    {
+                        query += "or ";
+                    }
                 }
-                query += "'";
+                if (fitlist.Count > 0) { query += ")"; }
+
+                if (!string.IsNullOrEmpty(size) || !string.IsNullOrEmpty(inseam) || !string.IsNullOrEmpty(priceFrom.ToString()))
+                {
+                    query += "and ";
+                }
             }
+            Console.WriteLine(query);
 
             if (!string.IsNullOrEmpty(size))
             {
                 List<string> sizelist = size.Split(',').ToList();
-                query += " and Sizes like '%";
-
+                if (sizelist.Count > 0) { query += "("; }
                 for (int i = 0; i < sizelist.Count; i++)
                 {
-                    query += sizelist[i] + "%";
+                    query += "erpProgramId = " + programId + " and Sizes like '%" + sizelist[i] + "%'";
+                    if (i == sizelist.Count - 1)
+                    {
+
+                    }
+                    else
+                    {
+                        query += "or ";
+                    }
                 }
-                query += "'";
+                if (sizelist.Count > 0) { query += ")"; }
+                
+                if (!string.IsNullOrEmpty(inseam) || !string.IsNullOrEmpty(priceFrom.ToString()))
+                {
+                    query += "and ";
+                }
             }
+            Console.WriteLine(query);
 
             if (!string.IsNullOrEmpty(inseam))
             {
                 List<string> inseamlist = inseam.Split(',').ToList();
-                query += " and InseamLengths like '%";
-
+                if (inseamlist.Count > 0) { query += "("; }
                 for (int i = 0; i < inseamlist.Count; i++)
                 {
-                    query += inseamlist[i] + "%";
-                }
-                query += "'";
-            }
+                    query += "erpProgramId = " + programId +" and InseamLengths like '%" + inseamlist[i] + "%'";
+                    if (i == inseamlist.Count - 1)
+                    {
 
+                    }
+                    else
+                    {
+                        query += "or ";
+                    }
+                }
+                if (inseamlist.Count > 0) { query += ")"; }
+                if (!string.IsNullOrEmpty(priceFrom.ToString()))
+                {
+                    query += "and ";
+                }
+            }
+            Console.WriteLine(query);
             if (!string.IsNullOrEmpty(priceFrom.ToString()) && !string.IsNullOrEmpty(priceTo.ToString()))
             {
-                query += " and (PriceMin+PriceMax)/2 > " + priceFrom + " and (PriceMin+PriceMax)/2 < " + priceTo;
-                check++;
-            }
+                query += "( erpProgramId = " + programId +  " and ( PriceMin + PriceMax )/2 >= " + priceFrom + " and (PriceMin+PriceMax)/2 <= " + priceTo + ")";
+             }
+
+          
+
 
             var test = _db.ProductCategories.FromSqlRaw(query).ToList();
-
-
             Task<List<ProductCategory>> final = Task.FromResult(test);
             return await final;
 

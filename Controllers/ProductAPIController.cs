@@ -31,7 +31,6 @@ namespace API.Controllers
     public class ProductAPIController : ControllerBase
     {
 
-        
         private readonly B2bapiContext _db;
         protected APIResponse _response;
         private List<ProductCategoryModel> categoryObject;
@@ -44,9 +43,6 @@ namespace API.Controllers
             this._response = new();
             _productservice = ProductService;
         }
-
-
-
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -75,7 +71,7 @@ namespace API.Controllers
                     return BadRequest(_response);
                 }
 
-     
+
 
                 //filter
                 List<ProductCategory> test = await _productservice.filter(_db, programId, garmentType, color, fit, size, inseam, priceFrom, priceTo);

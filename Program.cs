@@ -1,15 +1,19 @@
+
+
 global using API.Models;
 global using Microsoft.EntityFrameworkCore;
 global using API.Services;
 using System.Security;
+using API;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //to add parameter at constructor of controller
-builder.Services.AddSingleton<ProductService>();
+builder.Services.AddTransient<ProductService>();
+builder.Services.AddTransient<UserService>();
 
-// Add services to the container.
-//builder.Services.AddScoped<IService, Service>();
+//Auto mapping 
+builder.Services.AddAutoMapper(typeof(MappingConfig));//Auto mapping
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -45,3 +49,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace API.Models;
 
-public partial class User
+public partial class User 
 {
     public int UserId { get; set; }
 
@@ -29,9 +29,9 @@ public partial class User
 
     public decimal TotalOpenBalance { get; set; }
 
-    public bool AccountFlag { get; set; }
+    public bool IsAdmin { get; set; }
 
-    public bool? Active { get; set; }
+    public bool? IsActive { get; set; }
 
     public virtual ICollection<Address> Addresses { get; } = new List<Address>();
 

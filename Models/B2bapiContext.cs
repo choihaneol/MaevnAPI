@@ -611,9 +611,6 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.AccountNumber)
                 .HasMaxLength(20)
                 .IsUnicode(false);
-            entity.Property(e => e.Active)
-                .IsRequired()
-                .HasDefaultValueSql("((1))");
             entity.Property(e => e.CompanyName)
                 .HasMaxLength(255)
                 .IsUnicode(false);
@@ -625,6 +622,9 @@ public partial class B2bapiContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Credit).HasColumnType("money");
             entity.Property(e => e.ErpCustomerId).HasColumnName("erpCustomerId");
+            entity.Property(e => e.IsActive)
+                .IsRequired()
+                .HasDefaultValueSql("((1))");
             entity.Property(e => e.LoginId)
                 .HasMaxLength(50)
                 .IsUnicode(false);
