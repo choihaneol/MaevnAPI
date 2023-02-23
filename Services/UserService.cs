@@ -12,13 +12,14 @@ using API.Services;
 using System;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Data;
+using Azure;
 
 
 namespace API.Services
 {
     public class UserService
     {
-        public async Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO, B2bapiContext _db, 
+        public async Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO, B2bapiContext _db,
             string secretKey, IMapper _mapper)
         {
             //check Username 
@@ -27,14 +28,16 @@ namespace API.Services
             bool isValid;
             User user = _db.Users.FirstOrDefault(u => u.LoginId == loginRequestDTO.UserName);
 
+
             //check id 
-            if (user == null || string.IsNullOrEmpty(user.LoginId))
+            if (user == null || string.IsNullOrEmpty(user.LoginId) )
             {
                 isValid = false;
                 return new LoginResponseDTO()
                 {
                     Token = "",
                     User = null,
+                    ErrorMassage = "Invalid",
                 };
             }
             else
@@ -51,9 +54,18 @@ namespace API.Services
                 }
             }
 
-
-
           
+            if (user.IsActive == false)
+            {
+                return new LoginResponseDTO()
+                {
+                    Token = "",
+                    User = null,
+                    ErrorMassage = "Inactive",
+                };
+            }
+     
+
 
             //check password     
             if (user.Password == loginRequestDTO.Password)
@@ -65,7 +77,7 @@ namespace API.Services
                 isValid = false;
             }
 
-
+            //Logger, error, isactive, username, passwopr, token
 
             //if not valid
             if (user == null || isValid == false)
@@ -74,6 +86,7 @@ namespace API.Services
                 {
                     Token = "",
                     User = null,
+                    ErrorMassage = "Invalid",
                 };
             }
 
@@ -102,6 +115,7 @@ namespace API.Services
             {
                 Token = tokenHandler.WriteToken(token),
                 User = _mapper.Map<UserDTO>(user),
+
             };
 
 
