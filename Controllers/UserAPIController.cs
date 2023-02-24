@@ -87,11 +87,35 @@ namespace API.Controllers
         public async Task<IActionResult> getLoggedInUserId()
         {
             string id = Convert.ToString(HttpContext.User.FindFirstValue("username"));
-            string token; 
+ 
+
+            
+            //if user was found generate JWT Token
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(secretKey);
 
 
-                return Ok(new { LoginId = id });
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                         {
+                    new Claim(ClaimTypes.Name, id),
+                    new Claim("username", id),
+                         }),
+                Expires = DateTime.UtcNow.AddMinutes(1),
+                SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+
+            //Actually generate token
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            
+
+            return Ok(new { LoginId = id, Token = tokenHandler.WriteToken(token) });
+
          }
+
+
 
         /*
         [Authorize]
