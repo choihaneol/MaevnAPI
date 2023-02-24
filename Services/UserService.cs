@@ -101,9 +101,10 @@ namespace API.Services
                 Subject = new ClaimsIdentity(new Claim[]
                          {
                     new Claim(ClaimTypes.Name, user.LoginId),
-                    new Claim(ClaimTypes.Role, userRole)
+                    new Claim("username", user.LoginId.ToString()),
+                     new Claim(ClaimTypes.Role, userRole)
                          }),
-                Expires = DateTime.UtcNow.AddHours(3),
+                Expires = DateTime.UtcNow.AddMinutes(1),
                 SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
