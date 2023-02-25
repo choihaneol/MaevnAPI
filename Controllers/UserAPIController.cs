@@ -47,12 +47,12 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDTO model)
+        public async Task<IActionResult> Login(LoginRequestDTO model)
         {
 
 
             var loginResponse = await _userService.Login(model,_db, secretKey, _mapper);
-            User user = _db.Users.FirstOrDefault(u => u.LoginId == model.UserName);
+            User user = _db.Users.FirstOrDefault(u => u.LoginId == model.username);
 
 
             if (loginResponse.ErrorMassage == "Inactive")
@@ -84,10 +84,6 @@ namespace API.Controllers
         [Authorize]
         [HttpGet]
         [Route("Users/current")]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> getLoggedInUserId()
         {

@@ -23,10 +23,10 @@ namespace API.Services
             string secretKey, IMapper _mapper)
         {
             //check Username 
-            string requestUsername = loginRequestDTO.UserName;
+            string requestUsername = loginRequestDTO.username;
             String userRole;
             bool isValid;
-            User user = _db.Users.FirstOrDefault(u => u.LoginId == loginRequestDTO.UserName);
+            User user = _db.Users.FirstOrDefault(u => u.LoginId == loginRequestDTO.username);
 
 
             //check id 
