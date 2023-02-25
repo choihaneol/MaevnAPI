@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//to add parameter at constructor of controller
+//Services
 builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<UserService>();
 
@@ -19,7 +19,7 @@ builder.Services.AddTransient<UserService>();
 builder.Services.AddAutoMapper(typeof(MappingConfig));//Auto mapping
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 
 //Token for swagger
@@ -49,6 +49,7 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+
 
 builder.Services.AddDbContext<B2bapiContext>();
 
@@ -80,6 +81,8 @@ app.UseSwagger();
 //app.UseSwaggerUI();
 //}
 
+
+//Persis logined status in swagger 
 app.UseSwaggerUI(c =>
 {
     c.ConfigObject.AdditionalItems.Add("persistAuthorization", "true");

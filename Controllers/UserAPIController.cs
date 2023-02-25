@@ -84,6 +84,11 @@ namespace API.Controllers
         [Authorize]
         [HttpGet]
         [Route("Users/current")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> getLoggedInUserId()
         {
             string id = Convert.ToString(HttpContext.User.FindFirstValue("username"));

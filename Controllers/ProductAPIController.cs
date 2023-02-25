@@ -22,10 +22,11 @@ using Microsoft.IdentityModel.Tokens;
 using static System.Net.Mime.MediaTypeNames;
 using System.Linq;
 using API.Extenstions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-
+    //[Authorize]
     [Route("/products")]
     [ApiController]
     public class ProductAPIController : ControllerBase
@@ -49,11 +50,11 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<List<ProductCategory>>> GetAllProductCategory()
         {
             return Ok(_db.ProductCategories.ToList());
         }
-
 
 
         [HttpGet("{programId:int}", Name = "getProductCategory")]
@@ -61,6 +62,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<APIResponse>> GetProductCategory(int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
         {
             try
