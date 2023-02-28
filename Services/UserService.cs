@@ -105,6 +105,7 @@ namespace API.Services
                      new Claim(ClaimTypes.Role, userRole)
                          }),
                 Expires = DateTime.UtcNow.AddMinutes(1),
+
                 SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
