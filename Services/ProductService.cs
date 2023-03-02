@@ -14,6 +14,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using static Azure.Core.HttpHeader;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace API.Services
@@ -96,15 +97,39 @@ namespace API.Services
 
                 if (categoryProducts[i].B2bActiveFlag == true)  // it need to be changed to true 
                 {
+                    Console.WriteLine(i);
+                    Console.WriteLine(categoryProducts.Count());
+
                     var propertyValue = categoryProducts[i].StyleNumber;
                     var propertyValue2 = 10;
+                    Console.WriteLine(propertyValue);
 
-                    Console.WriteLine();
+
+                    /*
+                     * SELECT   [id]
+      ,[productCategoryId]
+      ,[TypeId]
+      ,[StyleNumber]
+      ,[ColorCode]
+      ,[ColorName]
+      ,[ProductUrl]
+      ,[ActiveFlag]
+  FROM [B2BAPI].[dbo].[ProductImage]
+WHERE TypeId=10 and [productCategoryId] in (SELECT [id] 
+  FROM [B2BAPI].[dbo].[ProductCategory]
+ where [erpProgramId] =  9 )
+
+                    */
 
 
 
                     var url = _db.ProductImages
                     .FromSqlRaw($"Select * from ProductImage where StyleNumber = '{propertyValue}' AND TypeId = '{propertyValue2}'").ToList();
+
+
+                    Console.WriteLine(url.ElementAt(0).ProductUrl.ToString());
+                    Console.WriteLine(url[0].ProductUrl.ToString());
+
                     var colortmp = categoryProducts[i].Colors;
                     List<string> color = colortmp.Split(',').ToList();
                     var fittmp = categoryProducts[i].Fits;
@@ -113,7 +138,7 @@ namespace API.Services
                     List<string> size = sizetmp.Split(',').ToList();
                     var inseamtmp = categoryProducts[i].InseamLengths;
                     List<string> inseam = inseamtmp.Split(',').ToList();
-
+ 
                     categoryObject.Add(new ProductCategoryModel
                     {
                         Id = categoryProducts[i].Id,
@@ -138,9 +163,10 @@ namespace API.Services
                         PriceMean = (categoryProducts[i].PriceMin + categoryProducts[i].PriceMax / 2),
                         B2bActiveFlag = categoryProducts[i].B2bActiveFlag,
 
-                        ProductUrl = url[0].ProductUrl,
-                        //ProductUrl = "https://maevn-images.s3.us-east-2.amazonaws.com/MaevnUniforms/products/" + categoryProducts[i].StyleNumber + "blk.jpg", // defulat image url column should be added to productCategory table 
-                    });
+                        //ProductUrl = url[0].ProductUrl,
+
+                    //ProductUrl = "https://maevn-images.s3.us-east-2.amazonaws.com/MaevnUniforms/products/" + categoryProducts[i].StyleNumber + "blk.jpg", // defulat image url column should be added to productCategory table 
+                });
                 }
             }
 
@@ -219,11 +245,11 @@ namespace API.Services
               }
 
               */
-            
 
 
 
-            int check = 0;
+
+                    int check = 0;
             string query = "Select * from ProductCategory where ";
 
             if (string.IsNullOrEmpty(garmentType) && string.IsNullOrEmpty(color) 

@@ -94,7 +94,9 @@ namespace API.Controllers
             //if user was found generate JWT Token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey);
-
+        
+            
+         
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -103,9 +105,12 @@ namespace API.Controllers
                     new Claim(ClaimTypes.Name, id),
                     new Claim("username", id),
                          }),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                // Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(40),
+                 
                 SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
+        
 
 
             //Actually generate token

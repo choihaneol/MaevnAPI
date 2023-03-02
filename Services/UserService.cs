@@ -109,6 +109,8 @@ namespace API.Services
                 SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
+
+
            
 
             //Actually generate token
