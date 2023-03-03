@@ -55,18 +55,25 @@ builder.Services.AddDbContext<B2bapiContext>();
 
 //Validate token
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(opt =>
-    {
-        opt.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.
-                GetBytes(builder.Configuration["ApiSettings:Secret"]))
-        };
-    });
+ .AddJwtBearer(opt =>
+ {
+     opt.TokenValidationParameters = new TokenValidationParameters
+     {
+         ClockSkew = TimeSpan.Zero,
+         ValidateIssuer = false,
+         ValidateAudience = false,
+         ValidateLifetime = true,
+         LifetimeValidator = (DateTime? notBefore, DateTime? expires, SecurityToken securityToken,
+         TokenValidationParameters validationParameters) =>
+         {
+             return notBefore <= DateTime.UtcNow &&
+             expires > DateTime.UtcNow;
+         },
+         ValidateIssuerSigningKey = true,
+         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.
+     GetBytes(builder.Configuration["ApiSettings:Secret"]))
+     };
+ });
 builder.Services.AddAuthorization();
 
 //Acept for accessing API 

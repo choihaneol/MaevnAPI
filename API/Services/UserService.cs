@@ -104,7 +104,7 @@ namespace API.Services
                     new Claim("username", user.LoginId.ToString()),
                      new Claim(ClaimTypes.Role, userRole)
                          }),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(3), //3 minutes
 
                 SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
