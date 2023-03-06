@@ -30,7 +30,7 @@ namespace API.Services
 
 
             //check id 
-            if (user == null || string.IsNullOrEmpty(user.LoginId) )
+            if (user == null || string.IsNullOrEmpty(user.LoginId))
             {
                 isValid = false;
                 return new LoginResponseDTO()
@@ -54,7 +54,7 @@ namespace API.Services
                 }
             }
 
-          
+
             if (user.IsActive == false)
             {
                 return new LoginResponseDTO()
@@ -64,7 +64,7 @@ namespace API.Services
                     ErrorMassage = "Inactive",
                 };
             }
-     
+
 
 
             //check password     
@@ -77,7 +77,6 @@ namespace API.Services
                 isValid = false;
             }
 
-            //Logger, error, isactive, username, passwopr, token
 
             //if not valid
             if (user == null || isValid == false)
@@ -104,12 +103,12 @@ namespace API.Services
                     new Claim("username", user.LoginId.ToString()),
                      new Claim(ClaimTypes.Role, userRole)
                          }),
-                Expires = DateTime.UtcNow.AddMinutes(1),
+                Expires = DateTime.UtcNow.AddMinutes(3), //3 minutes
 
                 SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
-           
+
 
             //Actually generate token
             var token = tokenHandler.CreateToken(tokenDescriptor);
