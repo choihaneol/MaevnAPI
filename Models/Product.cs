@@ -17,6 +17,8 @@ public partial class Product
 
     public string? ColorName { get; set; }
 
+    public string ItemSize { get; set; } = null!;
+
     public string? ShortDescription { get; set; }
 
     public string? LongDescription { get; set; }

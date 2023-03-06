@@ -17,4 +17,3 @@ namespace API.Models
 
     }
 }
-

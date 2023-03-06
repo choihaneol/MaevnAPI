@@ -94,9 +94,7 @@ namespace API.Controllers
             //if user was found generate JWT Token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey);
-        
-            
-         
+
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -105,12 +103,9 @@ namespace API.Controllers
                     new Claim(ClaimTypes.Name, id),
                     new Claim("username", id),
                          }),
-                // Expires = DateTime.UtcNow.AddMinutes(1),
-                Expires = DateTime.UtcNow.AddMinutes(40),
-                 
+                Expires = DateTime.UtcNow.AddMinutes(1),
                 SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-        
 
 
             //Actually generate token
@@ -120,6 +115,15 @@ namespace API.Controllers
             return Ok(new { LoginId = id, Token = tokenHandler.WriteToken(token) });
 
          }
+
+        [Authorize]
+        [HttpGet]
+        [Route("Users/tokencheck")]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> tokenCheck()
+        {
+            return Ok();
+        }
 
 
 
@@ -131,7 +135,6 @@ namespace API.Controllers
          
                 //var usertest = await _userManager.FindByNameAsync(User.Identity.Name);
                 return _db.Users.FromSqlInterpolated($"select * from b2bapi.dbo.Users").OrderBy(a => a.LoginId).ToList();
-
             /*
             if (loginedUser == null)
             {
@@ -139,14 +142,12 @@ namespace API.Controllers
                 _response.IsSuccess = false;
                 _response.ErrorMessages.Add("User is not available");
                 return BadRequest(new { message = "Username or password is incorrect" });
-
             }
             else //generate token
             {
                 //if user was found generate JWT Token
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(secretKey);
-
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[]
@@ -156,22 +157,18 @@ namespace API.Controllers
                     Expires = DateTime.UtcNow.AddHours(3),
                     SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
-
-
                 //Actually generate token
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 LoginResponseDTO loginResponse = new LoginResponseDTO()
                 {
                     Token = tokenHandler.WriteToken(token),
                     User = _mapper.Map<UserDTO>(loginedUser),
-
                 };
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 _response.Result = loginResponse;
                 return Ok(_response);
             }
-
            
         }  */
 

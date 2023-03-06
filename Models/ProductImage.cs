@@ -5,7 +5,6 @@ namespace API.Models;
 
 public partial class ProductImage
 {
-    //actual programId
     public int Id { get; set; }
 
     public int ProductCategoryId { get; set; }

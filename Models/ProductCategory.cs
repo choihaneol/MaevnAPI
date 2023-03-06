@@ -38,4 +38,6 @@ public partial class ProductCategory
     public decimal? PriceMax { get; set; }
 
     public bool? B2bActiveFlag { get; set; }
+
+    public string? JsonSizes { get; set; }
 }
