@@ -45,6 +45,8 @@ public partial class B2bapiContext : DbContext
 
     public virtual DbSet<Role> Roles { get; set; }
 
+    public virtual DbSet<TestLog> TestLogs { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<Wishlist> Wishlists { get; set; }
@@ -605,6 +607,16 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.RolePlaceOrder).HasColumnName("Role_PlaceOrder");
             entity.Property(e => e.RoleProductMaster).HasColumnName("Role_ProductMaster");
             entity.Property(e => e.RoleStatement).HasColumnName("Role_Statement");
+        });
+
+        modelBuilder.Entity<TestLog>(entity =>
+        {
+            entity.HasNoKey();
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("_id");
+            entity.Property(e => e.JsonCol).HasColumnName("jsonCol");
         });
 
         modelBuilder.Entity<User>(entity =>

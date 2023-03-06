@@ -71,7 +71,6 @@ namespace API.Controllers
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-<<<<<<< HEAD
             }
             catch (Exception ex)
             {
@@ -82,25 +81,8 @@ namespace API.Controllers
             return _response;
         }
         */
-=======
->>>>>>> 27246066486e5fcc4f0bcdc7de777da52207bed7
 
-
-
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorMessages
-                    = new List<string>() { ex.ToString() };
-            }
-
-            return _response;
-
-        }
-        */
-
-            [HttpGet("{programId:int}", Name = "getProductCategory")]
+        [HttpGet("{programId:int}", Name = "getProductCategory")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

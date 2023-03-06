@@ -1,7 +1,7 @@
 ﻿
 using System.Net;
 
-namespace API.Models.Dto
+namespace API.Models
 {
     public class APIResponseDTO
     {
@@ -17,4 +17,3 @@ namespace API.Models.Dto
 
     }
 }
-

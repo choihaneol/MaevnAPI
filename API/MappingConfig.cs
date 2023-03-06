@@ -1,7 +1,7 @@
-﻿using API.Models.Dto;
-using API.Models;
+﻿using API.Models;
+using API.Models.Dto;
 using AutoMapper;
-
+ 
 namespace API
 {
     public class MappingConfig : Profile
