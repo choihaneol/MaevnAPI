@@ -88,11 +88,20 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<Basket>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Basket__B40CC6CD3859EA65");
+            entity.HasKey(e => e.Id).HasName("PK__Basket__3213E83F1B53D00A");
 
             entity.ToTable("Basket");
 
-            entity.Property(e => e.ProductId).ValueGeneratedNever();
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.DateCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("dateCreated");
+            entity.Property(e => e.IsPreorder).HasColumnName("isPreorder");
+            entity.Property(e => e.ProductId).HasColumnName("productId");
+            entity.Property(e => e.Qty).HasColumnName("qty");
+            entity.Property(e => e.StatusId).HasColumnName("statusId");
+            entity.Property(e => e.UserId).HasColumnName("userId");
         });
 
         modelBuilder.Entity<CardInformation>(entity =>
