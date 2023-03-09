@@ -481,6 +481,7 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ColorName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.DiscountRate).HasColumnName("discountRate");
             entity.Property(e => e.ErpActiveFlag).HasColumnName("erpActiveFlag");
             entity.Property(e => e.ErpProductId).HasColumnName("erpProductId");
             entity.Property(e => e.ErpProgramId).HasColumnName("erpProgramId");
@@ -499,6 +500,8 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.InseamLength)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.IsNew).HasColumnName("isNew");
+            entity.Property(e => e.IsPreorder).HasColumnName("isPreorder");
             entity.Property(e => e.ItemSize)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -515,9 +518,6 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ProductLine)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.ProductUrlId)
-                .HasMaxLength(10)
-                .IsFixedLength();
             entity.Property(e => e.QtyAvailable).HasColumnName("qtyAvailable");
             entity.Property(e => e.ShortDescription)
                 .HasMaxLength(100)
@@ -542,6 +542,7 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.Colors)
                 .HasMaxLength(1000)
                 .IsUnicode(false);
+            entity.Property(e => e.DiscountRate).HasColumnName("discountRate");
             entity.Property(e => e.ErpProgramId).HasColumnName("erpProgramId");
             entity.Property(e => e.FabricContent)
                 .HasMaxLength(50)
@@ -558,6 +559,8 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.InseamLengths)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.IsNew).HasColumnName("isNew");
+            entity.Property(e => e.IsPreorder).HasColumnName("isPreorder");
             entity.Property(e => e.ItemWeight)
                 .HasMaxLength(50)
                 .IsUnicode(false);

@@ -16,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 //Services
 builder.Services.AddTransient<ProductService>();
 builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<OrderService>();
 
 //Auto mapping 
 builder.Services.AddAutoMapper(typeof(MappingConfig));//Auto mapping

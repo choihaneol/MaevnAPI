@@ -49,5 +49,9 @@ public partial class Product
 
     public bool? B2bActiveFlag { get; set; }
 
-    public string? ProductUrlId { get; set; }
+    public int IsPreorder { get; set; }
+
+    public int IsNew { get; set; }
+
+    public int DiscountRate { get; set; }
 }

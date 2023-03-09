@@ -38,4 +38,10 @@ public partial class ProductCategory
     public decimal? PriceMax { get; set; }
 
     public bool? B2bActiveFlag { get; set; }
+
+    public int IsPreorder { get; set; }
+
+    public int IsNew { get; set; }
+
+    public int DiscountRate { get; set; }
 }
