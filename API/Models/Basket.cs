@@ -15,6 +15,8 @@ public partial class Basket
 
     public int IsPreorder { get; set; }
 
+    public int SubAccount { get; set; }
+
     public int StatusId { get; set; }
 
     public DateTime DateCreated { get; set; }

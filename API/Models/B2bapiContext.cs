@@ -80,15 +80,11 @@ public partial class B2bapiContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.User).WithMany(p => p.Addresses)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Address__UserId__245D67DE");
         });
 
         modelBuilder.Entity<Basket>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Basket__3213E83F1B53D00A");
+            entity.HasKey(e => e.Id).HasName("PK__Basket__3213E83F52A1AF5E");
 
             entity.ToTable("Basket");
 
@@ -101,6 +97,7 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ProductId).HasColumnName("productId");
             entity.Property(e => e.Qty).HasColumnName("qty");
             entity.Property(e => e.StatusId).HasColumnName("statusId");
+            entity.Property(e => e.SubAccount).HasColumnName("subAccount");
             entity.Property(e => e.UserId).HasColumnName("userId");
         });
 
@@ -116,10 +113,6 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ExpirationDate).HasColumnType("date");
             entity.Property(e => e.LoginId).HasMaxLength(460);
 
-            entity.HasOne(d => d.User).WithMany(p => p.CardInformations)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CardInfor__UserI__25518C17");
         });
 
         modelBuilder.Entity<Carrier>(entity =>
@@ -633,7 +626,7 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CA122B7A1");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CE3482C74");
 
             entity.Property(e => e.AccountNumber)
                 .HasMaxLength(20)
@@ -661,6 +654,7 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.PaymentTerm)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.SubAccount).HasColumnName("subAccount");
             entity.Property(e => e.TotalCreditBalance).HasColumnType("money");
             entity.Property(e => e.TotalOpenBalance).HasColumnType("money");
         });

@@ -72,6 +72,10 @@ namespace API.Services
                         PriceMean = (categoryProducts[i].PriceMin + categoryProducts[i].PriceMax / 2),
                         B2bActiveFlag = categoryProducts[i].B2bActiveFlag,
 
+                        IsPreorder = categoryProducts[i].IsPreorder,
+                        IsNew = categoryProducts[i].IsNew,
+                        DiscountRate = categoryProducts[i].DiscountRate,
+
                         ProductUrl = url[0].ProductUrl,
                         //ProductUrl = "https://maevn-images.s3.us-east-2.amazonaws.com/MaevnUniforms/products/" + categoryProducts[i].StyleNumber + "blk.jpg", // defulat image url column should be added to productCategory table 
                     });

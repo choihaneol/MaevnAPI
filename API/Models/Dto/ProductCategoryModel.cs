@@ -18,6 +18,9 @@
         public string? Sizes { get; set; }
         public string? InseamLength { get; set; }
 
+        public int IsPreorder { get; set; }
+        public int IsNew { get; set; }
+        public int DiscountRate { get; set; }
 
         public List<string> ColorList { get; set; }
         public List<string> FitList { get; set; }
