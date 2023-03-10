@@ -1,5 +1,4 @@
-﻿
-using API.Models;
+﻿using API.Models;
 using API.Models.Dto;
 using API.Services;
 using AutoMapper;
@@ -21,7 +20,7 @@ using System.Data.SqlTypes;
 using Microsoft.IdentityModel.Tokens;
 using static System.Net.Mime.MediaTypeNames;
 using System.Linq;
- using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -55,22 +54,31 @@ namespace API.Controllers
             return Ok(_db.ProductCategories.ToList());
         }
 
-        /*
-        [HttpGet("{productId:int}", Name = "getProductDetail")]
+
+        [HttpGet]
+        [Route("getProductDetail")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<APIResponse>> getProductDetail(int productId)
+        public async Task<ActionResult<APIResponseDTO>> getProductDetail(string? styleNumber)
         {
             try
             {
-                if (productId == null)
+                if (styleNumber == null)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
+
+                //response object
+                ProductCategory detailObject = await _productservice.getProductDetail(_db, styleNumber);
+
+                _response.Result = detailObject;
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+
             }
             catch (Exception ex)
             {
@@ -80,7 +88,7 @@ namespace API.Controllers
             }
             return _response;
         }
-        */
+
 
         [HttpGet("{programId:int}", Name = "getProductCategory")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -98,7 +106,6 @@ namespace API.Controllers
                 }
 
 
-
                 //filter
                 List<ProductCategory> test = await _productservice.filter(_db, programId, garmentType, color, fit, size, inseam, priceFrom, priceTo);
                 categoryProducts = test;
@@ -107,7 +114,7 @@ namespace API.Controllers
 
                 //response object
                 categoryObject = await _productservice.getCategoryProduct(_db, _response, categoryProducts, programId);
-                
+
                 Console.WriteLine("categoryObject Length" + categoryObject.Count);
 
 
@@ -124,6 +131,9 @@ namespace API.Controllers
 
             return _response;
         }
+
+
+
     }
 }
 

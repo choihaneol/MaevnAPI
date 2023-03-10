@@ -6,7 +6,7 @@ using System.Net;
 namespace API.Controllers
 {
     [Authorize]
-    [Route("/orders")] 
+    [Route("/orders")]
     [ApiController]
     public class OrderAPIController : ControllerBase
     {
@@ -41,7 +41,7 @@ namespace API.Controllers
 
 
             //List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
-           var cart = await _orderService.getCart(_db, loginId);
+            var cart = await _orderService.getCart(_db, loginId);
 
 
             return _response;
