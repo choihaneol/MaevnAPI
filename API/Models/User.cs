@@ -29,11 +29,7 @@ public partial class User
 
     public decimal TotalOpenBalance { get; set; }
 
-    public bool IsAdmin { get; set; }
+    public int SubAccount { get; set; }
 
     public bool? IsActive { get; set; }
-
-    public virtual ICollection<Address> Addresses { get; } = new List<Address>();
-
-    public virtual ICollection<CardInformation> CardInformations { get; } = new List<CardInformation>();
 }

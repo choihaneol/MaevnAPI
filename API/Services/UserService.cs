@@ -44,7 +44,7 @@ namespace API.Services
             {
                 isValid = true;
                 //role
-                if (!string.IsNullOrEmpty(user.LoginId) && user.IsAdmin)
+                if (!string.IsNullOrEmpty(user.LoginId) && user.SubAccount == 0)
                 {
                     userRole = "admin";
                 }
