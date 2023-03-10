@@ -24,7 +24,7 @@ namespace API.Controllers
 
 
         private readonly B2bapiContext _db;
-        protected APIResponse _response;
+        protected APIResponseDTO _response;
         private readonly UserService _userService;
         private User loginedUser;
 

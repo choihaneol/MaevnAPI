@@ -3,10 +3,10 @@ using System.Net;
 
 namespace API.Models
 {
-    public class APIResponse
+    public class APIResponseDTO
     {
 
-        public APIResponse()
+        public APIResponseDTO()
         {
             ErrorMessages = new List<string>();
         }

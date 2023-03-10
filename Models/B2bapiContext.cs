@@ -41,8 +41,6 @@ public partial class B2bapiContext : DbContext
 
     public virtual DbSet<ProductCategory> ProductCategories { get; set; }
 
-    public virtual DbSet<ProductImage> ProductImages { get; set; }
-
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<TestLog> TestLogs { get; set; }
@@ -80,19 +78,26 @@ public partial class B2bapiContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.User).WithMany(p => p.Addresses)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Address__UserId__245D67DE");
+
         });
 
         modelBuilder.Entity<Basket>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Basket__B40CC6CD3859EA65");
+            entity.HasKey(e => e.Id).HasName("PK__Basket__3213E83F52A1AF5E");
 
             entity.ToTable("Basket");
 
-            entity.Property(e => e.ProductId).ValueGeneratedNever();
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.DateCreated)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("dateCreated");
+            entity.Property(e => e.IsPreorder).HasColumnName("isPreorder");
+            entity.Property(e => e.ProductId).HasColumnName("productId");
+            entity.Property(e => e.Qty).HasColumnName("qty");
+            entity.Property(e => e.StatusId).HasColumnName("statusId");
+            entity.Property(e => e.SubAccount).HasColumnName("subAccount");
+            entity.Property(e => e.UserId).HasColumnName("userId");
         });
 
         modelBuilder.Entity<CardInformation>(entity =>
@@ -107,10 +112,6 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ExpirationDate).HasColumnType("date");
             entity.Property(e => e.LoginId).HasMaxLength(460);
 
-            entity.HasOne(d => d.User).WithMany(p => p.CardInformations)
-                .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__CardInfor__UserI__25518C17");
         });
 
         modelBuilder.Entity<Carrier>(entity =>
@@ -472,6 +473,7 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ColorName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.DiscountRate).HasColumnName("discountRate");
             entity.Property(e => e.ErpActiveFlag).HasColumnName("erpActiveFlag");
             entity.Property(e => e.ErpProductId).HasColumnName("erpProductId");
             entity.Property(e => e.ErpProgramId).HasColumnName("erpProgramId");
@@ -490,6 +492,8 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.InseamLength)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.IsNew).HasColumnName("isNew");
+            entity.Property(e => e.IsPreorder).HasColumnName("isPreorder");
             entity.Property(e => e.ItemSize)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -506,9 +510,6 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ProductLine)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.ProductUrlId)
-                .HasMaxLength(10)
-                .IsFixedLength();
             entity.Property(e => e.QtyAvailable).HasColumnName("qtyAvailable");
             entity.Property(e => e.ShortDescription)
                 .HasMaxLength(100)
@@ -524,7 +525,7 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<ProductCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83F90A3071C");
+            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83F23BA2F3F");
 
             entity.ToTable("ProductCategory");
 
@@ -533,6 +534,7 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.Colors)
                 .HasMaxLength(1000)
                 .IsUnicode(false);
+            entity.Property(e => e.DiscountRate).HasColumnName("discountRate");
             entity.Property(e => e.ErpProgramId).HasColumnName("erpProgramId");
             entity.Property(e => e.FabricContent)
                 .HasMaxLength(50)
@@ -546,9 +548,12 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.Gender)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.ImageLinks).HasColumnName("imageLinks");
             entity.Property(e => e.InseamLengths)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.IsNew).HasColumnName("isNew");
+            entity.Property(e => e.IsPreorder).HasColumnName("isPreorder");
             entity.Property(e => e.ItemWeight)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -571,27 +576,7 @@ public partial class B2bapiContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<ProductImage>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__ProductI__3213E83F7B8FD987");
-
-            entity.ToTable("ProductImage");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.ColorCode)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.ColorName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.ProductCategoryId).HasColumnName("productCategoryId");
-            entity.Property(e => e.ProductUrl)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-            entity.Property(e => e.StyleNumber)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-        });
+       
 
         modelBuilder.Entity<Role>(entity =>
         {
@@ -621,7 +606,7 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CA122B7A1");
+            entity.HasKey(e => e.UserId).HasName("PK__Users__1788CC4CE3482C74");
 
             entity.Property(e => e.AccountNumber)
                 .HasMaxLength(20)
@@ -649,9 +634,11 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.PaymentTerm)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.SubAccount).HasColumnName("subAccount");
             entity.Property(e => e.TotalCreditBalance).HasColumnType("money");
             entity.Property(e => e.TotalOpenBalance).HasColumnType("money");
         });
+
 
         modelBuilder.Entity<Wishlist>(entity =>
         {

@@ -32,7 +32,7 @@ namespace API.Controllers
     {
 
         private readonly B2bapiContext _db;
-        protected APIResponse _response;
+        protected APIResponseDTO _response;
         private List<ProductCategoryModel> categoryObject;
         private List<ProductCategory> categoryProducts;
         private readonly ProductService _productservice;
@@ -87,7 +87,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> GetProductCategory(int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
+        public async Task<ActionResult<APIResponseDTO>> GetProductCategory(int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
         {
             try
             {

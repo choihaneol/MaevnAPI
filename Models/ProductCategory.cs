@@ -39,5 +39,11 @@ public partial class ProductCategory
 
     public bool? B2bActiveFlag { get; set; }
 
-    public string? JsonSizes { get; set; }
+    public int IsPreorder { get; set; }
+
+    public int IsNew { get; set; }
+
+    public int DiscountRate { get; set; }
+
+    public string? ImageLinks { get; set; }
 }
