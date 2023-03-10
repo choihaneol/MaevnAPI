@@ -73,7 +73,11 @@ namespace API.Controllers
                 }
 
                 //response object
+<<<<<<< HEAD
                 ProductCategory detailObject = await _productservice.getProductDetail(_db, styleNumber);
+=======
+                ProductCategory detailObject = await _productservice.getProductDetail(_db,styleNumber);
+>>>>>>> 8609c2e1fdc6ace81d580af6be02877873738ba8
 
                 _response.Result = detailObject;
                 _response.StatusCode = HttpStatusCode.OK;

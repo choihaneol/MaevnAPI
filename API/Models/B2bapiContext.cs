@@ -41,6 +41,10 @@ public partial class B2bapiContext : DbContext
 
     public virtual DbSet<ProductCategory> ProductCategories { get; set; }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8609c2e1fdc6ace81d580af6be02877873738ba8
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<TestLog> TestLogs { get; set; }
@@ -576,7 +580,11 @@ public partial class B2bapiContext : DbContext
                 .IsUnicode(false);
         });
 
+<<<<<<< HEAD
        
+=======
+        
+>>>>>>> 8609c2e1fdc6ace81d580af6be02877873738ba8
 
         modelBuilder.Entity<Role>(entity =>
         {
