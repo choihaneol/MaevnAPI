@@ -8,8 +8,6 @@
         public string? StyleNumber { get; set; }
         public string? Colors { get; set; }
         public string? ShortDescription { get; set; }
-      
-        public string? ImageLinks { get; set; }
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
         public decimal? PriceMean { get; set; }
@@ -27,6 +25,9 @@
         public List<string> FitList { get; set; }
         public List<string> SizeList { get; set; }
         public List<string> InseamLengthList { get; set; }
+
+        public string? ImageLinks { get; set; }
+
     }
 }
 

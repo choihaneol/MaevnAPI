@@ -21,6 +21,19 @@ namespace API.Services
 
     public class ProductService
     {
+        public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
+        {
+
+            string query = "Select * from ProductCategory where StyleNumber=" + styleNumber;
+            var test = _db.ProductCategories.FromSqlRaw(query).First();
+
+            Console.WriteLine(test);
+
+            Task<ProductCategory> final = Task.FromResult(test);
+            return await final;
+
+        }
+
         public async Task<List<ProductCategoryModel>> getCategoryProduct(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
         {
 
@@ -35,10 +48,6 @@ namespace API.Services
 
                     Console.WriteLine();
 
-
-
-                    var url = _db.ProductImages
-                    .FromSqlRaw($"Select * from ProductImage where StyleNumber = '{propertyValue}' AND TypeId = '{propertyValue2}'").ToList();
                     var colortmp = categoryProducts[i].Colors;
                     List<string> color = colortmp.Split(',').ToList();
                     var fittmp = categoryProducts[i].Fits;
@@ -76,9 +85,9 @@ namespace API.Services
                         IsNew = categoryProducts[i].IsNew,
                         DiscountRate = categoryProducts[i].DiscountRate,
 
-                        //ProductUrl = url[0].ProductUrl,
+                        ImageLinks = categoryProducts[i].ImageLinks,
 
- 
+
                     });
                 }
             }

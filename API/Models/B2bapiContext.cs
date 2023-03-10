@@ -41,8 +41,6 @@ public partial class B2bapiContext : DbContext
 
     public virtual DbSet<ProductCategory> ProductCategories { get; set; }
 
-    public virtual DbSet<ProductImage> ProductImages { get; set; }
-
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<TestLog> TestLogs { get; set; }
@@ -578,25 +576,7 @@ public partial class B2bapiContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<ProductImage>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__ProductI__3213E83F1C833839");
-
-            entity.ToTable("ProductImage");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.ColorCode)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.ColorName)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.ImageUrl).HasColumnName("imageUrl");
-            entity.Property(e => e.ProductCategoryId).HasColumnName("productCategoryId");
-            entity.Property(e => e.StyleNumber)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-        });
+       
 
         modelBuilder.Entity<Role>(entity =>
         {
