@@ -9,5 +9,7 @@
         public int Qty { get; set; }
 
         public int IsPreorder { get; set; }
+
+        public string SubAccountId { get; set; }
     }
 }

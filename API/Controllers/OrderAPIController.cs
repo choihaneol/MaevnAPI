@@ -30,9 +30,9 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<APIResponseDTO>> getCart(string loginId)
+        public async Task<ActionResult<APIResponseDTO>> getShippingCart(int userId)
         {
-            if (loginId == null)
+            if (userId == null)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -40,8 +40,8 @@ namespace API.Controllers
             }
 
 
-            //List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
-           var cart = await _orderService.getCart(_db, loginId);
+           //List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
+           var cart = await _orderService.getShippingCart(_db, userId);
 
 
             return _response;
@@ -53,7 +53,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponseDTO>> postCart(List<ShoppingCartDTO> model, String loginId)
+        public async Task<ActionResult<APIResponseDTO>> postShippingCart(List<ShoppingCartDTO> model, String loginId)
         {
             if (model == null || loginId == null)
             {
@@ -63,7 +63,7 @@ namespace API.Controllers
             }
 
             bool postResult = false;
-            postResult = await _orderService.postCart(_db, model, loginId);
+            postResult = await _orderService.postShippingCart(_db, model, loginId);
             try
             {
                 if (postResult == false)

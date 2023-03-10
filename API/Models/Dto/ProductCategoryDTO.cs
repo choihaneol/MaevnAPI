@@ -1,6 +1,6 @@
 ﻿namespace API.Models.Dto
 {
-    public class ProductCategoryModel
+    public class ProductCategoryDTO
     {
         public int Id { get; set; }
         public int ErpProgramId { get; set; }
@@ -21,7 +21,7 @@
         public int IsNew { get; set; }
         public int DiscountRate { get; set; }
 
-        public string? ImageLinks { get; set; }
+        public ImageLinkDTO? ImageLinks { get; set; }
 
         public List<string> ColorList { get; set; }
         public List<string> FitList { get; set; }
