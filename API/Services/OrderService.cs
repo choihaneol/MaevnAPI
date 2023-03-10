@@ -16,13 +16,10 @@ namespace API.Services
     {
 
 
-        public async Task<ActionResult<ShoppingCartDTO>> getShippingCart(B2bapiContext _db,int userId)
+        public async Task<ActionResult<List<ShoppingCartDTO>>> getShippingCart(B2bapiContext _db,int? userId)
         {
             //search UsesrId using loginId
-            List<ShoppingCartDTO> carts = new List<ShoppingCartDTO>();
-
-            // string query = "SELECT a.userId,a.productId,a.qty,a.IsPreorder,ISNULL((select LoginId from [B2BAPI].[dbo].[Users] where UserId=a.[subAccount]),'') as subaccountId FROM [B2BAPI].[dbo].[Basket] as a where a.userId=" + userId+ " OR a.subAccount" + userId;
-            var test = from b in _db.Baskets
+            List<ShoppingCartDTO> carts = (from b in _db.Baskets
                        let subAccount = (from u in _db.Users
                                          where b.UserId == u.UserId
                                          select u.LoginId).FirstOrDefault()
@@ -34,20 +31,15 @@ namespace API.Services
                            Qty = b.Qty,
                            IsPreorder = b.IsPreorder,
                            SubAccountId = subAccount,
-                       };
+                       }).ToList();
 
-            Console.WriteLine(test);
-
-           // var test = _db.Baskets.FromSqlRaw(query).ToList();
-             Task<ShoppingCartDTO> final = null; 
+            Task<List<ShoppingCartDTO>> final = Task.FromResult(carts);
             return await final;
         }
 
 
-        public async Task<Boolean> postShippingCart(B2bapiContext _db, List<ShoppingCartDTO> model, string loginId)
+        public async Task<Boolean> updateShippingCart(B2bapiContext _db, List<ShoppingCartDTO> model, string loginId)
         {
-
-
             //find userId 
             User user = _db.Users.FirstOrDefault(u => u.LoginId == loginId);
             int userId = user.UserId;

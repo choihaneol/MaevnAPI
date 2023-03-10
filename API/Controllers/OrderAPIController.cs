@@ -30,30 +30,42 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<APIResponseDTO>> getShippingCart(int userId)
+        public async Task<ActionResult<APIResponseDTO>> getShippingCart(int? userId)
         {
-            if (userId == null)
+            try
+            {
+                if (userId == null || userId == 0)
+                {
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
+
+                //response object
+                var cartObject = await _orderService.getShippingCart(_db, userId);
+
+                _response.Result = cartObject;
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
+
+            }
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.BadRequest;
-                return BadRequest(_response);
+                _response.ErrorMessages
+                    = new List<string>() { ex.ToString() };
             }
-
-
-           //List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
-           var cart = await _orderService.getShippingCart(_db, userId);
-
-
             return _response;
         }
 
-        [HttpPatch]
+        
+        [HttpPatch] //update
         [Route("/ShoppingCart")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponseDTO>> postShippingCart(List<ShoppingCartDTO> model, String loginId)
+        public async Task<ActionResult<APIResponseDTO>> updateShippingCart(List<ShoppingCartDTO> model, String loginId)
         {
             if (model == null || loginId == null)
             {
@@ -63,7 +75,7 @@ namespace API.Controllers
             }
 
             bool postResult = false;
-            postResult = await _orderService.postShippingCart(_db, model, loginId);
+            postResult = await _orderService.updateShippingCart(_db, model, loginId);
             try
             {
                 if (postResult == false)
