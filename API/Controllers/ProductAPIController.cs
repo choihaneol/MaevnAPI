@@ -73,6 +73,12 @@ namespace API.Controllers
                     return BadRequest(_response);
                 }
 
+                //response object
+                ProductCategory detailObject = await _productservice.getProductDetail(_db,styleNumber);
+
+                _response.Result = detailObject;
+                _response.StatusCode = HttpStatusCode.OK;
+                return Ok(_response);
 
             }
             catch (Exception ex)
@@ -99,7 +105,6 @@ namespace API.Controllers
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-
 
 
                 //filter

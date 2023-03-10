@@ -21,6 +21,21 @@ namespace API.Services
 
     public class ProductService
     {
+
+
+        public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db,string? styleNumber)
+        {
+
+            string query = "Select * from ProductCategory where StyleNumber="+ styleNumber;
+            var test = _db.ProductCategories.FromSqlRaw(query).First();
+
+            Console.WriteLine(test);
+
+            Task<ProductCategory> final = Task.FromResult(test);
+            return await final;
+
+        }
+
         public async Task<List<ProductCategoryModel>> getCategoryProduct(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
         {
 
