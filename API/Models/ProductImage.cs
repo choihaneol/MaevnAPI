@@ -17,7 +17,7 @@ public partial class ProductImage
 
     public string? ColorName { get; set; }
 
-    public string? ProductUrl { get; set; }
+    public string? ImageUrl { get; set; }
 
     public bool? ActiveFlag { get; set; }
 }

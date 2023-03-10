@@ -44,4 +44,6 @@ public partial class ProductCategory
     public int IsNew { get; set; }
 
     public int DiscountRate { get; set; }
+
+    public string? ImageLinks { get; set; }
 }

@@ -80,10 +80,7 @@ public partial class B2bapiContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false);
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 65c2c8b48ca8d1909a47397c932e8cecb7d33b6c
         });
 
         modelBuilder.Entity<Basket>(entity =>
@@ -117,10 +114,6 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ExpirationDate).HasColumnType("date");
             entity.Property(e => e.LoginId).HasMaxLength(460);
 
-<<<<<<< HEAD
-     
-=======
->>>>>>> 65c2c8b48ca8d1909a47397c932e8cecb7d33b6c
         });
 
         modelBuilder.Entity<Carrier>(entity =>
@@ -534,7 +527,7 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<ProductCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83F90A3071C");
+            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83F23BA2F3F");
 
             entity.ToTable("ProductCategory");
 
@@ -557,6 +550,7 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.Gender)
                 .HasMaxLength(20)
                 .IsUnicode(false);
+            entity.Property(e => e.ImageLinks).HasColumnName("imageLinks");
             entity.Property(e => e.InseamLengths)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -586,7 +580,7 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<ProductImage>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ProductI__3213E83F7B8FD987");
+            entity.HasKey(e => e.Id).HasName("PK__ProductI__3213E83F1C833839");
 
             entity.ToTable("ProductImage");
 
@@ -597,10 +591,8 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ColorName)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.ImageUrl).HasColumnName("imageUrl");
             entity.Property(e => e.ProductCategoryId).HasColumnName("productCategoryId");
-            entity.Property(e => e.ProductUrl)
-                .HasMaxLength(255)
-                .IsUnicode(false);
             entity.Property(e => e.StyleNumber)
                 .HasMaxLength(50)
                 .IsUnicode(false);
