@@ -71,6 +71,14 @@ namespace API.Services
                         PriceMax = categoryProducts[i].PriceMax,
                         PriceMean = (categoryProducts[i].PriceMin + categoryProducts[i].PriceMax / 2),
                         B2bActiveFlag = categoryProducts[i].B2bActiveFlag,
+<<<<<<< HEAD
+=======
+
+                        IsPreorder = categoryProducts[i].IsPreorder,
+                        IsNew = categoryProducts[i].IsNew,
+                        DiscountRate = categoryProducts[i].DiscountRate,
+
+>>>>>>> 65c2c8b48ca8d1909a47397c932e8cecb7d33b6c
                         ProductUrl = url[0].ProductUrl,
 
                         IsPreorder = categoryProducts[i].IsPreorder,

@@ -80,7 +80,10 @@ public partial class B2bapiContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 65c2c8b48ca8d1909a47397c932e8cecb7d33b6c
         });
 
         modelBuilder.Entity<Basket>(entity =>
@@ -114,7 +117,10 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.ExpirationDate).HasColumnType("date");
             entity.Property(e => e.LoginId).HasMaxLength(460);
 
+<<<<<<< HEAD
      
+=======
+>>>>>>> 65c2c8b48ca8d1909a47397c932e8cecb7d33b6c
         });
 
         modelBuilder.Entity<Carrier>(entity =>
