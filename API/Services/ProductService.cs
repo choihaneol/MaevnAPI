@@ -36,9 +36,6 @@ namespace API.Services
                     Console.WriteLine();
 
 
-
-                    var url = _db.ProductImages
-                    .FromSqlRaw($"Select * from ProductImage where StyleNumber = '{propertyValue}' AND TypeId = '{propertyValue2}'").ToList();
                     var colortmp = categoryProducts[i].Colors;
                     List<string> color = colortmp.Split(',').ToList();
                     var fittmp = categoryProducts[i].Fits;
@@ -75,8 +72,8 @@ namespace API.Services
                         IsPreorder = categoryProducts[i].IsPreorder,
                         IsNew = categoryProducts[i].IsNew,
                         DiscountRate = categoryProducts[i].DiscountRate,
+                        ImageLinks = categoryProducts[i].ImageLinks,
 
-                        ProductUrl = url[0].ProductUrl,
                         //ProductUrl = "https://maevn-images.s3.us-east-2.amazonaws.com/MaevnUniforms/products/" + categoryProducts[i].StyleNumber + "blk.jpg", // defulat image url column should be added to productCategory table 
                     });
                 }

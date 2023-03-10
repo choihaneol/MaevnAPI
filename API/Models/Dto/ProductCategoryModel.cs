@@ -8,7 +8,6 @@
         public string? StyleNumber { get; set; }
         public string? Colors { get; set; }
         public string? ShortDescription { get; set; }
-        public string ProductUrl { get; set; }
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
         public decimal? PriceMean { get; set; }
@@ -21,6 +20,8 @@
         public int IsPreorder { get; set; }
         public int IsNew { get; set; }
         public int DiscountRate { get; set; }
+
+        public string? ImageLinks { get; set; }
 
         public List<string> ColorList { get; set; }
         public List<string> FitList { get; set; }
