@@ -6,7 +6,7 @@ using System.Net;
 namespace API.Controllers
 {
     [Authorize]
-    [Route("/orders")] //
+    [Route("/orders")] 
     [ApiController]
     public class OrderAPIController : ControllerBase
     {
@@ -22,15 +22,40 @@ namespace API.Controllers
         }
 
 
-        [HttpPost]
+
+        [HttpGet]
         [Route("/ShoppingCart")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponseDTO>> postCart(List<ShoppingCartDTO> model)
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<ActionResult<APIResponseDTO>> getCart(string loginId)
         {
-            if (model == null)
+            if (loginId == null)
+            {
+                _response.IsSuccess = false;
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                return BadRequest(_response);
+            }
+
+
+            //List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
+           var cart = await _orderService.getCart(_db, loginId);
+
+
+            return _response;
+        }
+
+        [HttpPatch]
+        [Route("/ShoppingCart")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<APIResponseDTO>> postCart(List<ShoppingCartDTO> model, String loginId)
+        {
+            if (model == null || loginId == null)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -38,7 +63,7 @@ namespace API.Controllers
             }
 
             bool postResult = false;
-            postResult = await _orderService.postCart(model, _db);
+            postResult = await _orderService.postCart(_db, model, loginId);
             try
             {
                 if (postResult == false)

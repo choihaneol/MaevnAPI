@@ -79,6 +79,7 @@ public partial class B2bapiContext : DbContext
                 .HasMaxLength(20)
                 .IsUnicode(false);
 
+
         });
 
         modelBuilder.Entity<Basket>(entity =>
@@ -576,6 +577,8 @@ public partial class B2bapiContext : DbContext
                 .IsUnicode(false);
         });
 
+        
+
         modelBuilder.Entity<Role>(entity =>
         {
             entity.HasKey(e => e.UserId).HasName("PK__Role__1788CC4C28D2A2ED");
@@ -636,6 +639,7 @@ public partial class B2bapiContext : DbContext
             entity.Property(e => e.TotalCreditBalance).HasColumnType("money");
             entity.Property(e => e.TotalOpenBalance).HasColumnType("money");
         });
+
 
         modelBuilder.Entity<Wishlist>(entity =>
         {

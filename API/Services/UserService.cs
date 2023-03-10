@@ -44,7 +44,7 @@ namespace API.Services
             {
                 isValid = true;
                 //role
-                if (!string.IsNullOrEmpty(user.LoginId) && user.SubAccount==0)
+                if (!string.IsNullOrEmpty(user.LoginId) && user.SubAccount == 0)
                 {
                     userRole = "admin";
                 }
@@ -103,7 +103,7 @@ namespace API.Services
                     new Claim("username", user.LoginId.ToString()),
                      new Claim(ClaimTypes.Role, userRole)
                          }),
-                Expires = DateTime.UtcNow.AddMinutes(30), //30 minutes
+                Expires = DateTime.UtcNow.AddMinutes(180), //30 minutes
 
                 SigningCredentials = new(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

@@ -89,6 +89,7 @@ namespace API.Services
                         DiscountRate = categoryProducts[i].DiscountRate,
                         ImageLinks = categoryProducts[i].ImageLinks,
 
+                       // ProductUrl = url[0].ProductUrl,
                         //ProductUrl = "https://maevn-images.s3.us-east-2.amazonaws.com/MaevnUniforms/products/" + categoryProducts[i].StyleNumber + "blk.jpg", // defulat image url column should be added to productCategory table 
                     });
                 }
