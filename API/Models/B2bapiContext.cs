@@ -526,7 +526,7 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<ProductCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83FE2CCF48B");
+            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83FDB3921C6");
 
             entity.ToTable("ProductCategory");
 
@@ -569,9 +569,6 @@ public partial class B2bapiContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.ShortDescription)
                 .HasMaxLength(100)
-                .IsUnicode(false);
-            entity.Property(e => e.Sizes)
-                .HasMaxLength(150)
                 .IsUnicode(false);
             entity.Property(e => e.StyleNumber)
                 .HasMaxLength(50)

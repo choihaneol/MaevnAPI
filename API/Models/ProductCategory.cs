@@ -15,7 +15,7 @@ public partial class ProductCategory
 
     public string DefaultColorCode { get; set; } = null!;
 
-    public string Colors { get; set; } = null!;
+    public string ColorSizes { get; set; } = null!;
 
     public string? ShortDescription { get; set; }
 
@@ -32,8 +32,6 @@ public partial class ProductCategory
     public string? ItemWeight { get; set; }
 
     public string? InseamLengths { get; set; }
-
-    public string? Sizes { get; set; }
 
     public decimal? PriceMin { get; set; }
 

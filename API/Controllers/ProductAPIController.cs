@@ -96,7 +96,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponseDTO>> GetProductCategory(int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
+        public async Task<ActionResult<APIResponseDTO>> GetProductList(int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace API.Controllers
 
 
                 //response object
-                categoryObject = await _productservice.getCategoryProduct(_db, _response, categoryProducts, programId);
+                categoryObject = await _productservice.getProductList(_db, _response, categoryProducts, programId);
 
                 Console.WriteLine("categoryObject Length" + categoryObject.Count);
 

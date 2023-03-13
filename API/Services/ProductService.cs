@@ -38,7 +38,7 @@ namespace API.Services
 
         }
 
-        public async Task<List<ProductListDTO>> getCategoryProduct(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
+        public async Task<List<ProductListDTO>> getProductList(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
         {
 
             List<ProductListDTO> categoryObject = new List<ProductListDTO>();
