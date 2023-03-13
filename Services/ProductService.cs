@@ -18,6 +18,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace API.Services
 {
+    //pull request test
     public class ProductService
     {
          public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
