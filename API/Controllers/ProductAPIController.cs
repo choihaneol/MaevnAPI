@@ -75,7 +75,10 @@ namespace API.Controllers
                 //response object
                 ProductCategory detailObject = await _productservice.getProductDetail(_db, styleNumber);
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
                 _response.Result = detailObject;
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);

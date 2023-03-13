@@ -12,9 +12,28 @@ namespace API.Services
     public class OrderService
     {
 
+<<<<<<< Updated upstream
 
         public async Task<ActionResult<List<ShoppingCartDTO>>> getCart(B2bapiContext _db, string loginId)
         {
+=======
+        public async Task<ActionResult<List<ShoppingCartDTO>>> getShippingCart(B2bapiContext _db, int? userId)
+        {
+            //search UsesrId using loginId
+            List<ShoppingCartDTO> carts = (from b in _db.Baskets
+                                           let subAccount = (from u in _db.Users
+                                                             where b.UserId == u.UserId
+                                                             select u.LoginId).FirstOrDefault()
+                                           where (b.UserId == userId) || (b.SubAccount == userId)
+                                           select new ShoppingCartDTO
+                                           {
+                                               UserId = b.UserId,
+                                               ProductId = b.ProductId,
+                                               Qty = b.Qty,
+                                               IsPreorder = b.IsPreorder,
+                                               SubAccountId = subAccount,
+                                           }).ToList();
+>>>>>>> Stashed changes
 
             //search UsesrId using loginId
             List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
@@ -84,7 +103,7 @@ namespace API.Services
                 }
                 else
                 {
-                    if (item.Qty !=0)
+                    if (item.Qty != 0)
                     {
                         // Add the new items to the cart
                         cart.Add(new Basket
@@ -94,7 +113,6 @@ namespace API.Services
                             ProductId = item.ProductId,
                             IsPreorder = item.IsPreorder,
                             SubAccount = subaccount,
-                            
                         });
                     }
                 }
@@ -104,9 +122,10 @@ namespace API.Services
             _db.Baskets.AddRange(cart);
             await _db.SaveChangesAsync();
 
-            return true; 
+            return true;
 
         }
+
 
     }
 }

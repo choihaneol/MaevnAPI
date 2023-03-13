@@ -32,7 +32,7 @@ namespace API.Controllers
         private string secretKey;
         private readonly IMapper _mapper; //for call userDTO 
 
-       // private readonly UserManager<User> _userManager;
+        // private readonly UserManager<User> _userManager;
 
 
         public UserAPIController(B2bapiContext db, UserService userService, IConfiguration configuration, IMapper mapper)
@@ -43,7 +43,7 @@ namespace API.Controllers
             secretKey = configuration.GetValue<string>("ApiSettings:Secret");
             _mapper = mapper;
 
-           // _userManager = userManager;
+            // _userManager = userManager;
         }
 
         [HttpPost("login")]
@@ -51,7 +51,7 @@ namespace API.Controllers
         {
 
 
-            var loginResponse = await _userService.Login(model,_db, secretKey, _mapper);
+            var loginResponse = await _userService.Login(model, _db, secretKey, _mapper);
             User user = _db.Users.FirstOrDefault(u => u.LoginId == model.username);
 
 
@@ -77,7 +77,7 @@ namespace API.Controllers
 
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
-            _response.Result = loginResponse;  
+            _response.Result = loginResponse;
             return Ok(_response);
         }
 
@@ -88,9 +88,9 @@ namespace API.Controllers
         public async Task<IActionResult> getLoggedInUserId()
         {
             string id = Convert.ToString(HttpContext.User.FindFirstValue("username"));
- 
 
-            
+
+
             //if user was found generate JWT Token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(secretKey);
@@ -110,11 +110,11 @@ namespace API.Controllers
 
             //Actually generate token
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            
+
 
             return Ok(new { LoginId = id, Token = tokenHandler.WriteToken(token) });
 
-         }
+        }
 
         [Authorize]
         [HttpGet]

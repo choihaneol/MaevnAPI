@@ -21,12 +21,16 @@
         public int IsNew { get; set; }
         public int DiscountRate { get; set; }
 
+<<<<<<< Updated upstream:Models/Dto/ProductCategoryModel.cs
+=======
+
+>>>>>>> Stashed changes:Models/Dto/ProductCategoryDTO.cs
         public List<string> ColorList { get; set; }
         public List<string> FitList { get; set; }
         public List<string> SizeList { get; set; }
         public List<string> InseamLengthList { get; set; }
 
-        public string? ImageLinks { get; set; }
+        public ImageLinkDTO? ImageLinks { get; set; }
 
     }
 }

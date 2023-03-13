@@ -38,18 +38,25 @@ namespace API.Controllers
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 return BadRequest(_response);
             }
+<<<<<<< Updated upstream
 
 
             //List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
             var cart = await _orderService.getCart(_db, loginId);
 
 
+=======
+>>>>>>> Stashed changes
             return _response;
         }
 
 
+<<<<<<< Updated upstream
 
         [HttpPatch]
+=======
+        [HttpPatch] //update
+>>>>>>> Stashed changes
         [Route("/ShoppingCart")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]

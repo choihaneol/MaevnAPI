@@ -21,11 +21,20 @@ namespace API.Services
 
     public class ProductService
     {
+<<<<<<< Updated upstream
          public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
         {
 
             string query = "Select * from ProductCategory where StyleNumber="+ styleNumber;
              var test = _db.ProductCategories.FromSqlRaw(query).First();
+=======
+
+        public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
+        {
+
+            string query = "Select * from ProductCategory where StyleNumber=" + styleNumber;
+            var test = _db.ProductCategories.FromSqlRaw(query).First();
+>>>>>>> Stashed changes
 
             Console.WriteLine(test);
 
@@ -34,10 +43,17 @@ namespace API.Services
 
         }
 
+<<<<<<< Updated upstream
         public async Task<List<ProductCategoryModel>> getCategoryProduct(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
         {
 
             List<ProductCategoryModel> categoryObject = new List<ProductCategoryModel>();
+=======
+        public async Task<List<ProductCategoryDTO>> getCategoryProduct(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
+        {
+
+            List<ProductCategoryDTO> categoryObject = new List<ProductCategoryDTO>();
+>>>>>>> Stashed changes
             for (int i = 0; i < categoryProducts.Count(); i++)
             {
 
@@ -48,6 +64,10 @@ namespace API.Services
 
                     Console.WriteLine();
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
                     var colortmp = categoryProducts[i].Colors;
                     List<string> color = colortmp.Split(',').ToList();
                     var fittmp = categoryProducts[i].Fits;
@@ -84,9 +104,18 @@ namespace API.Services
                         IsPreorder = categoryProducts[i].IsPreorder,
                         IsNew = categoryProducts[i].IsNew,
                         DiscountRate = categoryProducts[i].DiscountRate,
+<<<<<<< Updated upstream
                         ImageLinks = categoryProducts[i].ImageLinks,
 
                     });
+=======
+                        ImageLinks = JsonConvert.DeserializeObject<ImageLinkDTO>(categoryProducts[i].ImageLinks)
+
+
+                        // ProductUrl = url[0].ProductUrl,
+                        //ProductUrl = "https://maevn-images.s3.us-east-2.amazonaws.com/MaevnUniforms/products/" + categoryProducts[i].StyleNumber + "blk.jpg", // defulat image url column should be added to productCategory table 
+                    }); ; ; ;
+>>>>>>> Stashed changes
                 }
             }
 
@@ -99,7 +128,7 @@ namespace API.Services
 
         public async Task<List<ProductCategory>> filter(Models.B2bapiContext _db, int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
         {
-       
+
 
             int check = 0;
             string query = "Select * from ProductCategory where ";
@@ -259,4 +288,4 @@ namespace API.Services
 
         }
     }
-}
+ }
