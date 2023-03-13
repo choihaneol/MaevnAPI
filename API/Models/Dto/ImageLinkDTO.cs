@@ -1,6 +1,6 @@
 ﻿namespace API.Models.Dto
 {
-    #nullable enable
+#nullable enable
     public class ImageLinkDTO
     {
         public List<ImageSingleDTO> list { get; set; }

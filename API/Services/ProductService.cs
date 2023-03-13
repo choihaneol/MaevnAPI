@@ -25,10 +25,10 @@ namespace API.Services
     {
 
 
-        public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db,string? styleNumber)
+        public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
         {
 
-            string query = "Select * from ProductCategory where StyleNumber="+ styleNumber;
+            string query = "Select * from ProductCategory where StyleNumber=" + styleNumber;
             var test = _db.ProductCategories.FromSqlRaw(query).First();
 
             Console.WriteLine(test);
@@ -89,7 +89,7 @@ namespace API.Services
                         IsPreorder = categoryProducts[i].IsPreorder,
                         IsNew = categoryProducts[i].IsNew,
                         DiscountRate = categoryProducts[i].DiscountRate,
-                        ImageLinks = JsonConvert.DeserializeObject<ImageLinkDTO>( categoryProducts[i].ImageLinks )
+                        ImageLinks = JsonConvert.DeserializeObject<ImageLinkDTO>(categoryProducts[i].ImageLinks)
 
 
                         // ProductUrl = url[0].ProductUrl,
@@ -107,7 +107,7 @@ namespace API.Services
 
         public async Task<List<ProductCategory>> filter(Models.B2bapiContext _db, int programId, string? garmentType, string? color, string? fit, string? size, string? inseam, decimal? priceFrom, decimal? priceTo)
         {
-       
+
 
             int check = 0;
             string query = "Select * from ProductCategory where ";

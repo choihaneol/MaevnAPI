@@ -21,7 +21,7 @@ using System.Data.SqlTypes;
 using Microsoft.IdentityModel.Tokens;
 using static System.Net.Mime.MediaTypeNames;
 using System.Linq;
- using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -74,7 +74,7 @@ namespace API.Controllers
                 }
 
                 //response object
-                ProductCategory detailObject = await _productservice.getProductDetail(_db,styleNumber);
+                ProductCategory detailObject = await _productservice.getProductDetail(_db, styleNumber);
 
                 _response.Result = detailObject;
                 _response.StatusCode = HttpStatusCode.OK;
@@ -115,7 +115,7 @@ namespace API.Controllers
 
                 //response object
                 categoryObject = await _productservice.getCategoryProduct(_db, _response, categoryProducts, programId);
-                
+
                 Console.WriteLine("categoryObject Length" + categoryObject.Count);
 
 

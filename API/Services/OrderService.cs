@@ -20,18 +20,18 @@ namespace API.Services
         {
             //search UsesrId using loginId
             List<ShoppingCartDTO> carts = (from b in _db.Baskets
-                       let subAccount = (from u in _db.Users
-                                         where b.UserId == u.UserId
-                                         select u.LoginId).FirstOrDefault()
-                       where (b.UserId == userId) || (b.SubAccount == userId)
-                       select new ShoppingCartDTO
-                       {
-                           UserId  = b.UserId,
-                           ProductId = b.ProductId,
-                           Qty = b.Qty,
-                           IsPreorder = b.IsPreorder,
-                           SubAccountId = subAccount,
-                       }).ToList();
+                                           let subAccount = (from u in _db.Users
+                                                             where b.UserId == u.UserId
+                                                             select u.LoginId).FirstOrDefault()
+                                           where (b.UserId == userId) || (b.SubAccount == userId)
+                                           select new ShoppingCartDTO
+                                           {
+                                               UserId = b.UserId,
+                                               ProductId = b.ProductId,
+                                               Qty = b.Qty,
+                                               IsPreorder = b.IsPreorder,
+                                               SubAccountId = subAccount,
+                                           }).ToList();
 
             Task<List<ShoppingCartDTO>> final = Task.FromResult(carts);
             return await final;
@@ -69,7 +69,7 @@ namespace API.Services
                 }
                 else
                 {
-                    if (item.Qty !=0)
+                    if (item.Qty != 0)
                     {
                         // Add the new items to the cart
                         cart.Add(new Basket
@@ -89,7 +89,7 @@ namespace API.Services
            // _db.Baskets.AddRange(cart);
             await _db.SaveChangesAsync();
 
-            return true; 
+            return true;
 
         }
 

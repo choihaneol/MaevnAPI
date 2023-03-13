@@ -17,7 +17,7 @@ namespace API.Models.Dto
         public List<string> InseamList { get; set; }
 
 
-        //product table
+        //product tableP
         public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
         public string ColorCode { get; set; }

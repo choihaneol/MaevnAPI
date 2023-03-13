@@ -21,12 +21,14 @@
         public int IsNew { get; set; }
         public int DiscountRate { get; set; }
 
-        public ImageLinkDTO? ImageLinks { get; set; }
 
         public List<string> ColorList { get; set; }
         public List<string> FitList { get; set; }
         public List<string> SizeList { get; set; }
         public List<string> InseamLengthList { get; set; }
+
+        public ImageLinkDTO? ImageLinks { get; set; }
+
     }
 }
 
