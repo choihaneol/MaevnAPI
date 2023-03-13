@@ -6,7 +6,6 @@
         public int ErpProgramId { get; set; }
         public string? ProductLine { get; set; }
         public string? StyleNumber { get; set; }
-        public string? Colors { get; set; }
         public string? ShortDescription { get; set; }
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
@@ -20,7 +19,6 @@
         public int IsPreorder { get; set; }
         public int IsNew { get; set; }
         public int DiscountRate { get; set; }
-
 
         public List<string> ColorList { get; set; }
         public List<string> FitList { get; set; }

@@ -25,15 +25,29 @@ namespace API.Services
     {
 
 
-        public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
+        public async Task<ProductDetailDTO> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
         {
 
             string query = "Select * from ProductCategory where StyleNumber=" + styleNumber;
             var test = _db.ProductCategories.FromSqlRaw(query).First();
 
+            ProductDetailDTO res = new ProductDetailDTO()
+            {
+                ProductLine = test.ProductLine,
+                StyleNumber = test.StyleNumber,
+                ShortDescription = test.ShortDescription,
+                LongDescription= test.LongDescription,
+                PriceMax = test.PriceMax,
+                PriceMin = test.PriceMin,
+                FitList = test.Fits.Split(',').ToList(),
+                InseamList = test.InseamLengths.Split(',').ToList(),
+                colorSizes = JsonConvert.DeserializeObject<ColorSizesDTO>(test.ColorSizes),
+                ImageLinks = JsonConvert.DeserializeObject<ImageLinkDTO>(test.ImageLinks)
+            };
+
             Console.WriteLine(test);
 
-            Task<ProductCategory> final = Task.FromResult(test);
+            Task<ProductDetailDTO> final = Task.FromResult(res);
             return await final;
 
         }
@@ -53,12 +67,12 @@ namespace API.Services
                     Console.WriteLine();
 
 
-                    var colortmp = categoryProducts[i].Colors;
-                    List<string> color = colortmp.Split(',').ToList();
+                 //   var colortmp = categoryProducts[i].Colors;
+                 //   List<string> color = colortmp.Split(',').ToList();
                     var fittmp = categoryProducts[i].Fits;
                     List<string> fit = fittmp.Split(',').ToList();
-                    var sizetmp = categoryProducts[i].Sizes;
-                    List<string> size = sizetmp.Split(',').ToList();
+                 //   var sizetmp = categoryProducts[i].Sizes;
+                 //   List<string> size = sizetmp.Split(',').ToList();
                     var inseamtmp = categoryProducts[i].InseamLengths;
                     List<string> inseam = inseamtmp.Split(',').ToList();
 
@@ -69,15 +83,15 @@ namespace API.Services
                         StyleNumber = categoryProducts[i].StyleNumber,
                         ShortDescription = categoryProducts[i].ShortDescription,
                         ProductLine = categoryProducts[i].ProductLine,
-                        Colors = categoryProducts[i].Colors,
+                      //  Colors = categoryProducts[i].Colors,
                         Fits = categoryProducts[i].Fits,
-                        Sizes = categoryProducts[i].Sizes,
+                      //  Sizes = categoryProducts[i].Sizes,
                         InseamLength = categoryProducts[i].InseamLengths,
 
 
-                        ColorList = color,
+                     //   ColorList = color,
                         FitList = fit,
-                        SizeList = size,
+                      //  SizeList = size,
                         InseamLengthList = inseam,
 
                         GarmentType = categoryProducts[i].GarmentType,
