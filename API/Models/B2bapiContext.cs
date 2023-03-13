@@ -526,7 +526,7 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<ProductCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83F23BA2F3F");
+            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83F4B41839A");
 
             entity.ToTable("ProductCategory");
 

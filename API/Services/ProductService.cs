@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,6 +14,7 @@ using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Text.Json;
 using static Azure.Core.HttpHeader;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -21,20 +23,13 @@ namespace API.Services
 
     public class ProductService
     {
-<<<<<<< Updated upstream
-         public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
-        {
 
-            string query = "Select * from ProductCategory where StyleNumber="+ styleNumber;
-             var test = _db.ProductCategories.FromSqlRaw(query).First();
-=======
 
         public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
         {
 
             string query = "Select * from ProductCategory where StyleNumber=" + styleNumber;
             var test = _db.ProductCategories.FromSqlRaw(query).First();
->>>>>>> Stashed changes
 
             Console.WriteLine(test);
 
@@ -43,17 +38,10 @@ namespace API.Services
 
         }
 
-<<<<<<< Updated upstream
-        public async Task<List<ProductCategoryModel>> getCategoryProduct(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
-        {
-
-            List<ProductCategoryModel> categoryObject = new List<ProductCategoryModel>();
-=======
         public async Task<List<ProductCategoryDTO>> getCategoryProduct(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
         {
 
             List<ProductCategoryDTO> categoryObject = new List<ProductCategoryDTO>();
->>>>>>> Stashed changes
             for (int i = 0; i < categoryProducts.Count(); i++)
             {
 
@@ -64,10 +52,7 @@ namespace API.Services
 
                     Console.WriteLine();
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
                     var colortmp = categoryProducts[i].Colors;
                     List<string> color = colortmp.Split(',').ToList();
                     var fittmp = categoryProducts[i].Fits;
@@ -77,7 +62,7 @@ namespace API.Services
                     var inseamtmp = categoryProducts[i].InseamLengths;
                     List<string> inseam = inseamtmp.Split(',').ToList();
 
-                    categoryObject.Add(new ProductCategoryModel
+                    categoryObject.Add(new ProductCategoryDTO
                     {
                         Id = categoryProducts[i].Id,
                         ErpProgramId = categoryProducts[i].ErpProgramId,
@@ -104,22 +89,16 @@ namespace API.Services
                         IsPreorder = categoryProducts[i].IsPreorder,
                         IsNew = categoryProducts[i].IsNew,
                         DiscountRate = categoryProducts[i].DiscountRate,
-<<<<<<< Updated upstream
-                        ImageLinks = categoryProducts[i].ImageLinks,
-
-                    });
-=======
                         ImageLinks = JsonConvert.DeserializeObject<ImageLinkDTO>(categoryProducts[i].ImageLinks)
 
 
                         // ProductUrl = url[0].ProductUrl,
                         //ProductUrl = "https://maevn-images.s3.us-east-2.amazonaws.com/MaevnUniforms/products/" + categoryProducts[i].StyleNumber + "blk.jpg", // defulat image url column should be added to productCategory table 
                     }); ; ; ;
->>>>>>> Stashed changes
                 }
             }
 
-            Task<List<ProductCategoryModel>> final = Task.FromResult(categoryObject);
+            Task<List<ProductCategoryDTO>> final = Task.FromResult(categoryObject);
             return await final;
         }
 
@@ -288,4 +267,4 @@ namespace API.Services
 
         }
     }
- }
+}

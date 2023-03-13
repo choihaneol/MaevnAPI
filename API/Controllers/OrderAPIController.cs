@@ -6,7 +6,7 @@ using System.Net;
 namespace API.Controllers
 {
     [Authorize]
-    [Route("/orders")]
+    [Route("/orders")] 
     [ApiController]
     public class OrderAPIController : ControllerBase
     {
@@ -30,39 +30,30 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<APIResponseDTO>> getCart(string loginId)
+        public async Task<ActionResult<APIResponseDTO>> getShippingCart(int userId)
         {
-            if (loginId == null)
+            if (userId == null)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 return BadRequest(_response);
             }
-<<<<<<< Updated upstream
 
 
-            //List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
-            var cart = await _orderService.getCart(_db, loginId);
+           //List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
+           var cart = await _orderService.getShippingCart(_db, userId);
 
 
-=======
->>>>>>> Stashed changes
             return _response;
         }
 
-
-<<<<<<< Updated upstream
-
         [HttpPatch]
-=======
-        [HttpPatch] //update
->>>>>>> Stashed changes
         [Route("/ShoppingCart")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponseDTO>> postCart(List<ShoppingCartDTO> model, String loginId)
+        public async Task<ActionResult<APIResponseDTO>> postShippingCart(List<ShoppingCartDTO> model, String loginId)
         {
             if (model == null || loginId == null)
             {
@@ -72,7 +63,7 @@ namespace API.Controllers
             }
 
             bool postResult = false;
-            postResult = await _orderService.postCart(_db, model, loginId);
+            postResult = await _orderService.updateShippingCart(_db, model, loginId);
             try
             {
                 if (postResult == false)

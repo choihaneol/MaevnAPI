@@ -20,7 +20,7 @@ namespace API.Services
     public class UserService
     {
         public async Task<LoginResponseDTO> Login(LoginRequestDTO loginRequestDTO, B2bapiContext _db,
-               string secretKey, IMapper _mapper)
+            string secretKey, IMapper _mapper)
         {
             //check Username 
             string requestUsername = loginRequestDTO.username;
