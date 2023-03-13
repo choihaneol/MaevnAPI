@@ -41,6 +41,7 @@ public partial class B2bapiContext : DbContext
 
     public virtual DbSet<ProductCategory> ProductCategories { get; set; }
 
+
     public virtual DbSet<Role> Roles { get; set; }
 
     public virtual DbSet<TestLog> TestLogs { get; set; }
@@ -576,7 +577,7 @@ public partial class B2bapiContext : DbContext
                 .IsUnicode(false);
         });
 
-       
+
 
         modelBuilder.Entity<Role>(entity =>
         {

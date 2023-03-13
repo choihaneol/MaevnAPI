@@ -21,11 +21,11 @@ namespace API.Services
 
     public class ProductService
     {
-        public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
+         public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
         {
 
-            string query = "Select * from ProductCategory where StyleNumber=" + styleNumber;
-            var test = _db.ProductCategories.FromSqlRaw(query).First();
+            string query = "Select * from ProductCategory where StyleNumber="+ styleNumber;
+             var test = _db.ProductCategories.FromSqlRaw(query).First();
 
             Console.WriteLine(test);
 
@@ -84,9 +84,7 @@ namespace API.Services
                         IsPreorder = categoryProducts[i].IsPreorder,
                         IsNew = categoryProducts[i].IsNew,
                         DiscountRate = categoryProducts[i].DiscountRate,
-
                         ImageLinks = categoryProducts[i].ImageLinks,
-
 
                     });
                 }
