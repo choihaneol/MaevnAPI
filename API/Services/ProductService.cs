@@ -21,20 +21,11 @@ namespace API.Services
 
     public class ProductService
     {
-<<<<<<< HEAD
-        public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
-        {
-
-            string query = "Select * from ProductCategory where StyleNumber=" + styleNumber;
-=======
-
-
-        public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db,string? styleNumber)
+         public async Task<ProductCategory> getProductDetail(Models.B2bapiContext _db, string? styleNumber)
         {
 
             string query = "Select * from ProductCategory where StyleNumber="+ styleNumber;
->>>>>>> 8609c2e1fdc6ace81d580af6be02877873738ba8
-            var test = _db.ProductCategories.FromSqlRaw(query).First();
+             var test = _db.ProductCategories.FromSqlRaw(query).First();
 
             Console.WriteLine(test);
 
@@ -57,10 +48,6 @@ namespace API.Services
 
                     Console.WriteLine();
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8609c2e1fdc6ace81d580af6be02877873738ba8
                     var colortmp = categoryProducts[i].Colors;
                     List<string> color = colortmp.Split(',').ToList();
                     var fittmp = categoryProducts[i].Fits;
@@ -99,14 +86,6 @@ namespace API.Services
                         DiscountRate = categoryProducts[i].DiscountRate,
                         ImageLinks = categoryProducts[i].ImageLinks,
 
-<<<<<<< HEAD
-                        ImageLinks = categoryProducts[i].ImageLinks,
-
-
-=======
-                       // ProductUrl = url[0].ProductUrl,
-                        //ProductUrl = "https://maevn-images.s3.us-east-2.amazonaws.com/MaevnUniforms/products/" + categoryProducts[i].StyleNumber + "blk.jpg", // defulat image url column should be added to productCategory table 
->>>>>>> 8609c2e1fdc6ace81d580af6be02877873738ba8
                     });
                 }
             }

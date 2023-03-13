@@ -21,8 +21,6 @@
         public int IsNew { get; set; }
         public int DiscountRate { get; set; }
 
-        public string? ImageLinks { get; set; }
-
         public List<string> ColorList { get; set; }
         public List<string> FitList { get; set; }
         public List<string> SizeList { get; set; }
