@@ -33,7 +33,7 @@ namespace API.Controllers
 
         private readonly B2bapiContext _db;
         protected APIResponseDTO _response;
-        private List<ProductCategoryDTO> categoryObject;
+        private List<ProductListDTO> categoryObject;
         private List<ProductCategory> categoryProducts;
         private readonly ProductService _productservice;
 
@@ -74,7 +74,7 @@ namespace API.Controllers
                 }
 
                 //response object
-                ProductCategory detailObject = await _productservice.getProductDetail(_db, styleNumber);
+                ProductCategory detailObject = await _productservice.getProductDetail(_db,styleNumber);
 
                 _response.Result = detailObject;
                 _response.StatusCode = HttpStatusCode.OK;

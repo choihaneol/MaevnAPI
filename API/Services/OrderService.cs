@@ -16,7 +16,7 @@ namespace API.Services
     {
 
 
-        public async Task<ActionResult<List<ShoppingCartDTO>>> getShippingCart(B2bapiContext _db, int? userId)
+        public async Task<ActionResult<List<ShoppingCartDTO>>> getShippingCart(B2bapiContext _db,int userId)
         {
             //search UsesrId using loginId
             List<ShoppingCartDTO> carts = (from b in _db.Baskets
@@ -38,9 +38,10 @@ namespace API.Services
         }
 
 
-        public async Task<Boolean> updateShippingCart(B2bapiContext _db, List<ShoppingCartDTO> model, string loginId)
+        public async Task<Boolean> updateShippingCart(B2bapiContext _db, List<ShoppingCartDTO> model)
         {
             //find userId 
+            /*
             User user = _db.Users.FirstOrDefault(u => u.LoginId == loginId);
             int userId = user.UserId;
             int subaccount = user.SubAccount;
@@ -83,8 +84,9 @@ namespace API.Services
                 }
             }
 
+            */
             // Save the updated cart back to the database 
-            _db.Baskets.AddRange(cart);
+           // _db.Baskets.AddRange(cart);
             await _db.SaveChangesAsync();
 
             return true;

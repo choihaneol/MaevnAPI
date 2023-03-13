@@ -32,12 +32,12 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<APIResponseDTO>> getShippingCart(int userId)
         {
-            if (userId == null)
+            if (userId == 0)
             {
-                _response.IsSuccess = false;
-                _response.StatusCode = HttpStatusCode.BadRequest;
-                return BadRequest(_response);
-            }
+                    _response.IsSuccess = false;
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    return BadRequest(_response);
+                }
 
 
            //List<ShoppingCartDTO> cart = new List<ShoppingCartDTO>();
@@ -53,9 +53,9 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponseDTO>> postShippingCart(List<ShoppingCartDTO> model, String loginId)
+        public async Task<ActionResult<APIResponseDTO>> updateShippingCart(List<ShoppingCartDTO> model, String loginId)
         {
-            if (model == null || loginId == null)
+            if (model == null)
             {
                 _response.IsSuccess = false;
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -63,7 +63,7 @@ namespace API.Controllers
             }
 
             bool postResult = false;
-            postResult = await _orderService.updateShippingCart(_db, model, loginId);
+            postResult = await _orderService.updateShippingCart(_db, model);
             try
             {
                 if (postResult == false)
