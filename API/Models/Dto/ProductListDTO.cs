@@ -1,6 +1,6 @@
 ﻿namespace API.Models.Dto
 {
-    public class ProductCategoryDTO
+    public class ProductListDTO
     {
         public int Id { get; set; }
         public int ErpProgramId { get; set; }

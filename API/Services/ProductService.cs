@@ -38,10 +38,10 @@ namespace API.Services
 
         }
 
-        public async Task<List<ProductCategoryDTO>> getCategoryProduct(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
+        public async Task<List<ProductListDTO>> getCategoryProduct(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
         {
 
-            List<ProductCategoryDTO> categoryObject = new List<ProductCategoryDTO>();
+            List<ProductListDTO> categoryObject = new List<ProductListDTO>();
             for (int i = 0; i < categoryProducts.Count(); i++)
             {
 
@@ -62,7 +62,7 @@ namespace API.Services
                     var inseamtmp = categoryProducts[i].InseamLengths;
                     List<string> inseam = inseamtmp.Split(',').ToList();
 
-                    categoryObject.Add(new ProductCategoryDTO
+                    categoryObject.Add(new ProductListDTO
                     {
                         Id = categoryProducts[i].Id,
                         ErpProgramId = categoryProducts[i].ErpProgramId,
@@ -98,7 +98,7 @@ namespace API.Services
                 }
             }
 
-            Task<List<ProductCategoryDTO>> final = Task.FromResult(categoryObject);
+            Task<List<ProductListDTO>> final = Task.FromResult(categoryObject);
             return await final;
         }
 

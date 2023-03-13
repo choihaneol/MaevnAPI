@@ -526,15 +526,16 @@ public partial class B2bapiContext : DbContext
 
         modelBuilder.Entity<ProductCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83F4B41839A");
+            entity.HasKey(e => e.Id).HasName("PK__ProductC__3213E83FE2CCF48B");
 
             entity.ToTable("ProductCategory");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.B2bActiveFlag).HasColumnName("b2bActiveFlag");
-            entity.Property(e => e.Colors)
-                .HasMaxLength(1000)
-                .IsUnicode(false);
+            entity.Property(e => e.DefaultColorCode)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("defaultColorCode");
             entity.Property(e => e.DiscountRate).HasColumnName("discountRate");
             entity.Property(e => e.ErpProgramId).HasColumnName("erpProgramId");
             entity.Property(e => e.FabricContent)

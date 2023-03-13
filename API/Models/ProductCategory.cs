@@ -13,7 +13,9 @@ public partial class ProductCategory
 
     public string? StyleNumber { get; set; }
 
-    public string? Colors { get; set; }
+    public string DefaultColorCode { get; set; } = null!;
+
+    public string Colors { get; set; } = null!;
 
     public string? ShortDescription { get; set; }
 

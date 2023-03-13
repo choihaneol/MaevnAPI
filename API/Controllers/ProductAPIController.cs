@@ -33,7 +33,7 @@ namespace API.Controllers
 
         private readonly B2bapiContext _db;
         protected APIResponseDTO _response;
-        private List<ProductCategoryDTO> categoryObject;
+        private List<ProductListDTO> categoryObject;
         private List<ProductCategory> categoryProducts;
         private readonly ProductService _productservice;
 
