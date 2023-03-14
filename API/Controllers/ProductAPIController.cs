@@ -108,13 +108,13 @@ namespace API.Controllers
 
 
                 //filter
-                List<ProductCategory> test = await _productservice.filter(_db, programId, garmentType, color, fit, size, inseam, priceFrom, priceTo);
-                categoryProducts = test;
+              //  List<ProductCategory> test = await _productservice.filter(_db, programId, garmentType, color, fit, size, inseam, priceFrom, priceTo);
+               // categoryProducts = test;
 
 
 
                 //response object
-                categoryObject = await _productservice.getProductList(_db, _response, categoryProducts, programId);
+                categoryObject = await _productservice.getProductList(_db, _response, programId);
 
                 Console.WriteLine("categoryObject Length" + categoryObject.Count);
 

@@ -46,4 +46,6 @@ public partial class ProductCategory
     public int DiscountRate { get; set; }
 
     public string ImageLinks { get; set; } = null!;
+
+    public string ListImageUrl { get; set; } = null!;
 }

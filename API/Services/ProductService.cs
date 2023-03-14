@@ -7,10 +7,12 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -52,67 +54,85 @@ namespace API.Services
 
         }
 
-        public async Task<List<ProductListDTO>> getProductList(Models.B2bapiContext _db, APIResponseDTO _response, List<ProductCategory> categoryProducts, int programId)
+        public async Task<List<ProductListDTO>> getProductList(Models.B2bapiContext _db, APIResponseDTO _response, int programId)
         {
 
-            List<ProductListDTO> categoryObject = new List<ProductListDTO>();
-            for (int i = 0; i < categoryProducts.Count(); i++)
+            List<ProductListDTO> productListObject = new List<ProductListDTO>();
+
+            //search UsesrId using loginId
+            var categoryProducts = (from b in _db.ProductCategories
+                                           where (b.ErpProgramId == programId) 
+                                           select b).ToList();
+
+
+            foreach(var item in categoryProducts)
             {
 
-                if (categoryProducts[i].B2bActiveFlag == true)  // it need to be changed to true 
+                if (item.B2bActiveFlag == true)  // it need to be changed to true 
                 {
-                    var propertyValue = categoryProducts[i].StyleNumber;
-                    var propertyValue2 = 10;
 
-                    Console.WriteLine();
+                    var colorsize = JsonConvert.DeserializeObject<dynamic>("["+item.ColorSizes+"]");
 
+                    List<string> colors = new List<string>();
+                    List<string> sizes = new List<string>();
+                    
+                    foreach (var newdata in colorsize)
+                    {
+                        foreach (JProperty jobj in newdata)
+                        {
+                            if(jobj.Name == "colorCode")
+                            {
+                                colors.Add(jobj.Value.ToString());
+                            }
+                            if (jobj.Name == "sizes")
+                            {
+                                foreach (var newsize in jobj.Value)
+                                {
+                                    foreach (JProperty sobj in newsize)
+                                    {
 
-                 //   var colortmp = categoryProducts[i].Colors;
-                 //   List<string> color = colortmp.Split(',').ToList();
-                    var fittmp = categoryProducts[i].Fits;
+                                        if(sobj.Name == "ItemSize")
+                                        {
+                                            sizes.Add(sobj.Value.ToString());
+                                        }
+
+                                    }
+                                     
+                                }
+                            }
+                        }
+
+                         
+                    }
+                    var fittmp = item.Fits;
                     List<string> fit = fittmp.Split(',').ToList();
-                 //   var sizetmp = categoryProducts[i].Sizes;
-                 //   List<string> size = sizetmp.Split(',').ToList();
-                    var inseamtmp = categoryProducts[i].InseamLengths;
+                    var inseamtmp = item.InseamLengths;
                     List<string> inseam = inseamtmp.Split(',').ToList();
 
-                    categoryObject.Add(new ProductListDTO
+                    productListObject.Add(new ProductListDTO
                     {
-                        Id = categoryProducts[i].Id,
-                        ErpProgramId = categoryProducts[i].ErpProgramId,
-                        StyleNumber = categoryProducts[i].StyleNumber,
-                        ShortDescription = categoryProducts[i].ShortDescription,
-                        ProductLine = categoryProducts[i].ProductLine,
-                      //  Colors = categoryProducts[i].Colors,
-                        Fits = categoryProducts[i].Fits,
-                      //  Sizes = categoryProducts[i].Sizes,
-                        InseamLength = categoryProducts[i].InseamLengths,
-
-
-                     //   ColorList = color,
-                        FitList = fit,
-                      //  SizeList = size,
-                        InseamLengthList = inseam,
-
-                        GarmentType = categoryProducts[i].GarmentType,
-                        PriceMin = categoryProducts[i].PriceMin,
-                        PriceMax = categoryProducts[i].PriceMax,
-                        PriceMean = (categoryProducts[i].PriceMin + categoryProducts[i].PriceMax / 2),
-                        B2bActiveFlag = categoryProducts[i].B2bActiveFlag,
-
-                        IsPreorder = categoryProducts[i].IsPreorder,
-                        IsNew = categoryProducts[i].IsNew,
-                        DiscountRate = categoryProducts[i].DiscountRate,
-                        ImageLinks = JsonConvert.DeserializeObject<ImageLinkDTO>(categoryProducts[i].ImageLinks)
-
-
-                        // ProductUrl = url[0].ProductUrl,
-                        //ProductUrl = "https://maevn-images.s3.us-east-2.amazonaws.com/MaevnUniforms/products/" + categoryProducts[i].StyleNumber + "blk.jpg", // defulat image url column should be added to productCategory table 
-                    }); ; ; ;
+                        Id = item.Id,
+                        ErpProgramId = item.ErpProgramId,
+                        ProductLine = item.ProductLine,
+                        StyleNumber = item.StyleNumber,
+                        ShortDescription = item.ShortDescription,
+                        GarmentType = item.GarmentType,
+                        PriceMin = item.PriceMin,
+                        PriceMax = item.PriceMax,
+                        Colors = colors.Distinct().ToList(),
+                        Sizes = sizes.Distinct().ToList(),
+                        Fits = fit,
+                        InseamLengths = inseam,
+                        defaultColorCode = item.DefaultColorCode,
+                        IsPreorder = item.IsPreorder,
+                        IsNew = item.IsNew,
+                        ListImageUrl = item.ListImageUrl,
+                    });
                 }
+
             }
 
-            Task<List<ProductListDTO>> final = Task.FromResult(categoryObject);
+            Task<List<ProductListDTO>> final = Task.FromResult(productListObject);
             return await final;
         }
 
